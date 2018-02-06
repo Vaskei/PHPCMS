@@ -37,9 +37,7 @@
                             $post_autor = $redak['post_author'];
                             $post_vrijeme = $redak['post_date'];
                             $post_slika = $redak['post_image'];
-                            $post_sadrzaj = $redak['post_content'];
-
-                            
+                            $post_sadrzaj = $redak['post_content'];                           
         
                             ?>
                             
