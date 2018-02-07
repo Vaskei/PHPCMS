@@ -30,8 +30,9 @@
 
                 if ($query->execute()) {
                     $rezultat=$query->get_result();
+                    //echo $rezultat->num_rows;
                     //print_r($rezultat);
-                    if ($rezultat->num_rows != 0) {
+                    if ($rezultat->num_rows > 0) {
                         while ($redak = $rezultat->fetch_assoc()) {
                             $post_naslov = $redak['post_title'];
                             $post_autor = $redak['post_author'];
