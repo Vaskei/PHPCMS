@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <!-- <link rel="stylesheet" href="css/phpcms.css"> -->
+    <link rel="stylesheet" href="css/phpcms.css">
 
     <title>Hello, world!</title>
 </head>

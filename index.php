@@ -1,11 +1,12 @@
-<?php include "includes/db.php"; ?>
-<?php include "includes/header.php"; ?>
+<?php require_once "includes/db.php"; ?>
+<?php require_once "includes/header.php"; ?>
 
 <!-- Navigation -->
-<?php include "includes/navigation.php"; ?>
+<?php require_once "includes/navigation.php"; ?>
+
 
 <!-- Page Content -->
-<div class="container">
+<div class="container sadrzaj">
 
     <div class="row">
 
@@ -59,10 +60,10 @@
             </ul>
         </div>
         <!-- Sidebar Widgets Column -->
-        <?php include "includes/sidebar.php"; ?></div>
+        <?php require_once "includes/sidebar.php"; ?></div>
     <!-- /.row -->
 
 </div>
 <!-- /.container -->
 
-<?php include "includes/footer.php"; ?>
+<?php require_once "includes/footer.php"; ?>

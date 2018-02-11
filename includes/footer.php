@@ -1,11 +1,14 @@
     <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Goran Ferenc</p>
-            <p class="m-0 text-center text-white">Copyright &copy; PHP CMS 2018</p>
-        </div>
-        <!-- /.container -->
-    </footer>
+    <div class="container futer">
+        <footer class="py-3 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Goran Ferenc</p>
+                <p class="m-0 text-center text-white">Copyright &copy; PHP CMS 2018</p>
+            </div>
+            <!-- /.container -->
+        </footer>
+    </div>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

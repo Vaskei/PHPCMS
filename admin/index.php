@@ -1,157 +1,73 @@
-<?php include "includes/db.php"; ?>
-<?php include "includes/header.php"; ?>
+<?php require_once "includes/db.php"; ?>
+<?php require_once "includes/header.php"; ?>
 
 <!-- Navigation -->
-<?php include "includes/navigation.php"; ?>
+<?php require_once "includes/navigation.php"; ?>
 
 <!-- Page Content -->
-
-<div class="container-fluid">
-    <div class="row no-gutters">
-        <div class="col-3 bg-dark sidebar">
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
-                    aria-controls="v-pills-home" aria-selected="true">Home</a>
-                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
-                    aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
-                    aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
-                    aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-            </div>
-        </div>
-        <div class="col-9 content mx-auto">
-            <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade p-4 show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                    <?php include "includes/sidebar.php"; ?>
-                </div>
-                <div class="tab-pane fade p-4" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                    <table class="table table-secondary table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane fade p-4" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                    <?php 
-
-                    $query = "SELECT * FROM posts";
-                    $rezultat = $db->query($query);
-                    if ($rezultat) {
-                        while ($redak = $rezultat->fetch_assoc()) {
-                            $post_naslov = $redak['post_title'];
-                            $post_autor = $redak['post_author'];
-                            $post_vrijeme = $redak['post_date'];
-                            $post_slika = $redak['post_image'];
-                            $post_sadrzaj = $redak['post_content'];
-
-                            ?>
-
-                    <!-- Blog Post -->
-                    <div class="card mb-4">
-                        <img class="card-img-top" src="images/<?php echo $post_slika; ?>" alt="Card image cap">
-                        <div class="card-body">
-                            <h2 class="card-title">
-                                <?php echo $post_naslov; ?>
-                            </h2>
-                            <p class="card-text">
-                                <?php echo $post_sadrzaj; ?>
-                            </p>
-                            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            Posted on
-                            <?php echo $post_vrijeme ?> by
-                            <a href="#">
-                                <?php echo $post_autor; ?>
+<div class="container-fluid h-100">
+    <div class="row wrapper h-100">
+        <aside class="col-12 col-md-2 p-0 bg-dark">
+            <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
+                <div class="collapse navbar-collapse">
+                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                        <li class="nav-item">
+                            <a class="nav-link pl-0 text-nowrap" href="#">
+                                <i class="fa fa-bullseye fa-fw"></i>
+                                <span class="font-weight-bold">Brand</span>
                             </a>
-                        </div>
-                    </div>
-                    <?php 
-                                }
-                            }
-
-                            ?>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-0" href="#">
+                                <i class="fa fa-heart-o fa-fw"></i>
+                                <span class="d-none d-md-inline">Link</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-0" href="#">
+                                <i class="fa fa-book fa-fw"></i>
+                                <span class="d-none d-md-inline">Link</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-0" href="#">
+                                <i class="fa fa-heart fa-fw"></i>
+                                <span class="d-none d-md-inline">Link</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-0" href="#">
+                                <i class="fa fa-star fa-fw"></i>
+                                <span class="d-none d-md-inline">Link</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-0" href="#">
+                                <i class="fa fa-list fa-fw"></i>
+                                <span class="d-none d-md-inline">Link</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="tab-pane fade p-4" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                    <table class="table table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </nav>
+        </aside>
+        <main class="col bg-faded py-3">
+            <h2>Main</h2>
+            <p>Sriracha biodiesel taxidermy organic post-ironic, Intelligentsia salvia mustache 90's code editing brunch.
+                Butcher polaroid VHS art party, hashtag Brooklyn deep v PBR narwhal sustainable mixtape swag wolf squid
+                tote bag. Tote bag cronut semiotics, raw denim deep v taxidermy messenger bag. Tofu YOLO Etsy, direct
+                trade ethical Odd Future jean shorts paleo. Forage Shoreditch tousled aesthetic irony, street art organic
+                Bushwick artisan cliche semiotics ugh synth chillwave meditation. Shabby chic lomo plaid vinyl chambray
+                Vice. Vice sustainable cardigan, Williamsburg master cleanse hella DIY 90's blog.</p>
 
-                </div>
-            </div>
-        </div>
+            <p>Ethical Kickstarter PBR asymmetrical lo-fi. Dreamcatcher street art Carles, stumptown gluten-free Kickstarter
+                artisan Wes Anderson wolf pug. Godard sustainable you probably haven't heard of them, vegan farm-to-table
+                Williamsburg slow-carb readymade disrupt deep v. Meggings seitan Wes Anderson semiotics, cliche American
+                Apparel whatever. Helvetica cray plaid, vegan brunch Banksy leggings +1 direct trade. Wayfarers codeply
+                PBR selfies. Banh mi McSweeney's Shoreditch selfies, forage fingerstache food truck occupy YOLO Pitchfork
+                fixie iPhone fanny pack art party Portland.</p>
+        </main>
     </div>
 </div>
 
-<?php include "includes/footer.php"; ?>
+<?php require_once "includes/footer.php"; ?>
