@@ -60,7 +60,7 @@
             </ul>
         </div>
         <!-- Sidebar Widgets Column -->
-        <?php require_once "includes/sidebar.php"; ?></div>
+        <?php require_once "includes/sidelist.php"; ?></div>
     <!-- /.row -->
 
 </div>
