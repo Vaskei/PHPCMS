@@ -1,4 +1,5 @@
 <?php require_once "includes/admin_db.php"; ?>
+<?php $title = "Admin - Postavke"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
 <!-- Navigation -->
@@ -9,7 +10,7 @@
     <div class="row h-100">
         <?php require_once "includes/admin_sidebar.php"; ?>
         <main class="col bg-faded py-3">
-            <h2 class="text-center">Postavke</h2>
+            <h2>Postavke</h2>
             <hr>
             
         </main>

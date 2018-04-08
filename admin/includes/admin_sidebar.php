@@ -11,18 +11,18 @@
         </button>
         <div class="collapse navbar-collapse" id="adminSidebar">
             <ul class="flex-column navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link pl-0 dropdown-toggle" href="#menu1" data-parent="#adminSidebar" data-toggle="collapse" data-target="#menu1"
+                <li class="nav-item <?php echoActiveClass("posts") || echoActiveClass("add_post") ?>">
+                    <a class="nav-link pl-0 dropdown-toggle" href="#posts_submenu" data-parent="#adminSidebar" data-toggle="collapse" data-target="#posts_submenu"
                         aria-expanded="false">
                         <i class="fa fa-book fa-fw"></i>&nbsp;Članci
                     </a>
-                    <div class="collapse" id="menu1">
+                    <div class="collapse" id="posts_submenu">
                         <ul class="flex-column nav">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link <?php echoActiveClass("posts") ?>" href="posts">
                                 <i class="fa fa-files-o fa-fw"></i>&nbsp;Svi članci
                             </a>
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-plus-square fa-fw"></i>&nbsp;Dodaj članak
+                            <a class="nav-link <?php echoActiveClass("add_post") ?>" href="add_post">
+                                <i class="fa fa-plus-square fa-fw"></i>&nbsp;Dodavanje članka
                             </a>
                         </ul>
                     </div>
@@ -38,10 +38,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pl-0 dropdown-toggle" href="#menu2" data-parent="#adminSidebar" data-toggle="collapse" data-target="#menu2">
+                    <a class="nav-link pl-0 dropdown-toggle" href="#users_submenu" data-parent="#adminSidebar" data-toggle="collapse" data-target="#users_submenu">
                         <i class="fa fa-users fa-fw"></i>&nbsp;Korisnici
                     </a>
-                    <div class="collapse" id="menu2">
+                    <div class="collapse" id="users_submenu">
                         <ul class="flex-column nav">
                             <a class="nav-link" href="#">Sub 1</a>
                             <a class="nav-link" href="#">Sub 2</a>

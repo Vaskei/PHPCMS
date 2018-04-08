@@ -1,0 +1,2 @@
+Dodavanje kategorija - provjera dali postoji kategorija
+Uredivanje kategorija - bolja provjera postojanosti kategorije

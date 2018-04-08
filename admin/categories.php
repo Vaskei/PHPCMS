@@ -1,4 +1,5 @@
 <?php require_once "includes/admin_db.php"; ?>
+<?php $title = "Admin - Kategorije"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
 <!-- Navigation -->
@@ -9,27 +10,10 @@
     <div class="row h-100">
         <?php require_once "includes/admin_sidebar.php"; ?>
         <main class="col bg-faded py-3">
-            <h2 class="text-center">Kategorije</h2>
+            <h2>Kategorije</h2>
             <hr>
 
-            <?php 
-
-            if (isset($_POST['submit'])) {
-                $imeKategorije = trim(htmlentities($_POST['catTitle']));
-                if ($imeKategorije == "" || empty($imeKategorije)) {
-                    echo ('<div class="alert alert-warning text-center"><strong>Upišite ime kategorije!</strong></div>');
-                } else {
-                    $query = $db->prepare("INSERT INTO categories (cat_title) VALUES (?)");
-                    $query->bind_param("s", $imeKategorije);
-                    if ($query->execute()) {
-                        echo ('<div class="alert alert-success text-center"><strong>Kategorija dodana.</strong></div>');
-                    } else {
-                        echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
-                    }
-                }
-            }
-            ?>
-
+            <!-- Dodavanje kategorije -->
             <div class="row">
                 <div class="col-md-6">
                     <form class="form" action="" method="POST">
@@ -39,13 +23,47 @@
                         <div class="input-group">
                             <input type="text" class="form-control" id="categories" name="catTitle" placeholder="Naziv kategorije...">
                             <div class="input-group-append">
-                                <button type="submit" name="submit" class="btn btn-success">Dodaj</button>
+                                <button type="submit" name="submit" class="btn btn-success gumb_kategorija">Dodaj</button>
                             </div>
                         </div>                       
                     </form>
+
+                    <?php
+                    if (isset($_POST['submit'])) {
+                        //var_dump($_POST);
+                        $imeKategorije = htmlentities(trim($_POST['catTitle']));
+                        if ($imeKategorije == "" || empty($imeKategorije)) {
+                            echo ('<div class="alert alert-warning text-center"><strong>Upišite ime kategorije!</strong></div>');
+                        } else {
+                            $query = $db->prepare('SELECT * FROM categories WHERE cat_title=? LIMIT 1');
+                            $query->bind_param("s", $imeKategorije);
+                            if ($query->execute()) {
+                                $result=$query->get_result();
+                                if (count($result->fetch_array())) {
+                                    echo ('<div class="alert alert-warning text-center"><strong>Kategorija već postoji u bazi!</strong></div>');
+                                } else {
+                                    $query = $db->prepare("INSERT INTO categories (cat_title) VALUES (?)");
+                                    $query->bind_param("s", $imeKategorije);
+                                    if ($query->execute()) {
+                                        echo ('<div class="alert alert-success text-center"><strong>Kategorija dodana.</strong></div>');
+                                    } else {
+                                        echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
+                                    }
+                                }
+                            } else {
+                                echo ('<div class="alert alert-warning text-center"><strong>Nije moguće čitati bazu!</strong></div>');
+                            }                            
+                        }
+                    }
+                    ?>
+
                 </div>
             </div>
+            <!-- // Dodavanje kategorije -->
+
             <br>
+
+            <!-- Uredivanje kategorije -->
             <div class="row">
                 <div class="col-md-6">
                     <form class="form" action="" method="POST">
@@ -53,7 +71,8 @@
                             <label for="categoriesEdit">Uredi kategoriju: </label>                            
                         </div>
 
-                        <?php if (isset($_GET['edit'])) {
+                        <?php 
+                        if (isset($_GET['edit'])) {
                             $idUredi = $_GET['edit'];
                             $query = $db->prepare("SELECT * FROM categories WHERE cat_id = ? LIMIT 1");
                             $query->bind_param("i", $idUredi);
@@ -61,20 +80,76 @@
                                 $rezultat = $query->get_result();
                                 $redakEdit = $rezultat->fetch_assoc();
                             }
-                        } ?>
+                        } 
+                        ?>
 
                         <div class="input-group">
                             <input type="text" class="form-control" id="categoriesEdit" name="catEdit" placeholder="Novi naziv kategorije..."
                                 value="<?php if (isset($redakEdit['cat_title'])) {echo $redakEdit['cat_title'];} ?>" >
                             <div class="input-group-append">
-                                <button type="submit" name="submitEdit" class="btn btn-info">Uredi</button>
+                                <button type="submit" name="submitEdit" class="btn btn-info gumb_kategorija">Uredi</button>
                             </div>
-                        </div>                       
+                        </div>
+
+                        <?php
+                        if (isset($_POST['submitEdit']) && isset($_GET['edit'])) {
+                            $catNaslovEdit = htmlentities(trim($_POST['catEdit']));
+                            //$id = intval($_GET['edit']);
+                            //echo($_GET['edit']);
+                            //echo($idUredi);
+                            echo("<br>");
+                            echo($catNaslovEdit);
+                            echo("<br>");
+                            if (empty($catNaslovEdit)) {
+                                echo ('<div class="alert alert-warning text-center"><strong>Upišite ime kategorije!</strong></div>');
+                            } else {  
+                                $query = $db->prepare('SELECT * FROM categories WHERE cat_title=? AND cat_id!=? LIMIT 1');
+                                $query->bind_param("si", $catNaslovEdit, $idUredi);
+                                if ($query->execute()) {
+                                    $result=$query->get_result();
+                                    if (count($result->fetch_array())) {
+                                        echo ('<div class="alert alert-warning text-center"><strong>Kategorija već postoji u bazi!</strong></div>');
+                                    } else {
+                                        $query=$db->prepare('UPDATE categories SET cat_title=? WHERE cat_id=?');
+                                        $query->bind_param('si', $catNaslovEdit, $idUredi);
+                                        if ($query->execute()) {
+                                            echo ('<div class="alert alert-success text-center"><strong>Kategorija izmjenjena.</strong></div>');
+                                            header("Location: ./categories?editsuccess");
+                                        } else {
+                                            echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
+                                        }
+                                    }
+                                } else {
+                                    echo ('<div class="alert alert-warning text-center"><strong>Nije moguće čitati bazu!</strong></div>');
+                                }      
+                                
+
+
+                                // print_r($redakEdit);
+                                // if ($catNaslovEdit == $redakEdit['cat_title']) {
+                                //     echo ('<div class="alert alert-warning text-center"><strong>Kategorija već postoji!</strong></div>');
+                                // } else {
+                                //     echo ('<div class="alert alert-success text-center"><strong>JAJ!</strong></div>');
+                                //     header("Location: ./categories?editsuccess");
+                                // }
+                            }
+                        } else if (isset($_POST['submitEdit'])) {
+                            echo ('<div class="alert alert-warning text-center"><strong>Niste odabrali kategoriju za uređivanje!</strong></div>');
+                        }
+                        
+                        if (isset($_GET['editsuccess'])) {
+                            echo ('<div class="alert alert-success text-center"><strong>Kategorija izmjenjena.</strong></div>');
+                        }
+                        ?>
+
                     </form>
                 </div>
             </div>
+            <!-- // Uredivanje kategorije -->
+
             <br>
 
+            <!-- Brisanje kategorije  -->
             <?php
 
             if (isset($_GET['delete'])) {
@@ -89,10 +164,10 @@
                 header("Location: ./categories");
             }
 
-
-
             ?>
+            <!-- // Brisanje kategorije  -->
 
+            <!-- Ispis kategorija u tablicu -->
             <div class="row">
                 <div class="col-12">
                     <table class="table table-sm table-bordered table-hover text-center">
@@ -104,7 +179,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
+                            <?php
 
                             $query = "SELECT * FROM categories";
                             $rezultat = $db->query($query);
@@ -115,8 +190,8 @@
                                     echo "<td>" . $redak['cat_title'] . "</td>";
                                     echo "<td>
                                         <div class='btn-group' role='group' aria-label='Button group'>
-                                            <a class='btn btn-info' role='button' href='categories.php?edit=" . $redak['cat_id'] . "'>Uredi</a>
-                                            <a class='btn btn-danger' role='button' href='categories.php?delete=" . $redak['cat_id'] . "'>Obriši</a>
+                                            <a class='btn btn-info gumb_kategorija' role='button' href='categories.php?edit=" . $redak['cat_id'] . "'>Uredi</a>
+                                            <a class='btn btn-danger gumb_kategorija' role='button' href='categories.php?delete=" . $redak['cat_id'] . "'>Obriši</a>
                                         </div>                                        
                                     </td>";
                                     echo "<tr>";
@@ -127,10 +202,9 @@
                     </table>
                 </div>
             </div>
+            <!-- // Ispis kategorija u tablicu -->
         </main>
     </div>
 </div>
-
-
 
 <?php require_once "includes/admin_footer.php"; ?>

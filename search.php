@@ -51,7 +51,7 @@
                                     <a href="#" class="btn btn-primary">Read More &rarr;</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    Posted on <?php echo $post_vrijeme ?> by
+                                    Posted on <?php echo $post_vrijeme; ?> by
                                     <a href="#"><?php echo $post_autor; ?></a>
                                 </div>
                             </div>

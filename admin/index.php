@@ -1,5 +1,7 @@
 <?php require_once "includes/admin_db.php"; ?>
+<?php $title = "Admin - Indeks"; ?>
 <?php require_once "includes/admin_header.php"; ?>
+
 
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>

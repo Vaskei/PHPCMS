@@ -21,7 +21,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/phpcms_admin.css">
 
-    <title>Hello, world!</title>
+    <title> <?php echo $title; ?> </title>
 </head>
 
 <body>
