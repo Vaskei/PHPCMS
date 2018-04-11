@@ -89,7 +89,7 @@
         </div>
 
         <!-- Sidebar Widgets Column -->
-        <?php require_once "includes/sidebar.php"; ?>
+        <?php require_once "includes/sidelist.php"; ?>
 
     </div>
     <!-- /.row -->

@@ -32,7 +32,7 @@
                     if (isset($_POST['submit'])) {
                         //var_dump($_POST);
                         $imeKategorije = htmlentities(trim($_POST['catTitle']));
-                        if ($imeKategorije == "" || empty($imeKategorije)) {
+                        if ($imeKategorije == "" || empty($imeKategorije) || !preg_match("/^[a-zA-Z0-9 ]*$/",$imeKategorije)) {
                             echo ('<div class="alert alert-warning text-center"><strong>Upišite ime kategorije!</strong></div>');
                         } else {
                             $query = $db->prepare('SELECT * FROM categories WHERE cat_title=? LIMIT 1');
@@ -122,16 +122,6 @@
                                 } else {
                                     echo ('<div class="alert alert-warning text-center"><strong>Nije moguće čitati bazu!</strong></div>');
                                 }      
-                                
-
-
-                                // print_r($redakEdit);
-                                // if ($catNaslovEdit == $redakEdit['cat_title']) {
-                                //     echo ('<div class="alert alert-warning text-center"><strong>Kategorija već postoji!</strong></div>');
-                                // } else {
-                                //     echo ('<div class="alert alert-success text-center"><strong>JAJ!</strong></div>');
-                                //     header("Location: ./categories?editsuccess");
-                                // }
                             }
                         } else if (isset($_POST['submitEdit'])) {
                             echo ('<div class="alert alert-warning text-center"><strong>Niste odabrali kategoriju za uređivanje!</strong></div>');

@@ -13,25 +13,65 @@
             <h2>Dodavanje članka</h2>
             <hr>
 
-            <?php 
+            <!-- Dodavanje clanka -->
+            <?php
             if (isset($_POST['create_post'])) {
-                $post_title = $_POST['post_title'];
-                $post_author = $_POST['post_author'];
-                $post_category = $_POST['post_category'];
-
-                $post_image = $_FILES['post_image']['name'];
-                $post_image_temp = $_FILES['post_image']['tmp_name'];
-
-                $post_tags = $_POST['post_tags'];
-                $post_content = $_POST['post_content'];
-                $post_date = date('d.m.Y. H:i');
+                $post_title = trim(htmlentities($_POST['post_title']));
+                $post_author = trim(htmlentities($_POST['post_author']));
+                $post_category = trim(htmlentities($_POST['post_category']));
+                $post_tags = trim(htmlentities($_POST['post_tags']));
+                $post_content = trim(htmlentities($_POST['post_content']));
+                //$post_date = date('Y-m-d H:i:s');
+                //$post_date_unix = strtotime($post_date);
+                //$post_date_page = date('d.m.Y. H:i', $post_date_unix);
                 $post_comment_count = 4;
+
+                $allowed_MIME = array("image/jpeg", "image/gif", "image/png", "image/bmp");
+
+                if (!empty($_FILES['post_image']['type'])&&!in_array($_FILES['post_image']['type'], $allowed_MIME)) {
+                    echo ('<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg ili png)!</strong></div>');
+                } else {
+                    $post_image_temp = $_FILES['post_image']['tmp_name'];
+                    $post_image = basename($_FILES['post_image']['name']);
+                    
+                    $lastDot = strrpos($post_image, ".");
+                    $ext = substr($post_image, $lastDot);
+                    $post_image = str_replace(".", "", substr($post_image, 0, $lastDot));
+                    $post_image = str_replace(" ", "", $post_image);                    
+                    if (strlen($post_image)>50) $post_image = substr($post_image, 0, 50);
+                    $post_image.=$ext;
+                    
+                    $upload_dir = "../images";
+					$i = 0;
+					while (file_exists($upload_dir . "/" . $post_image)) {
+						list ($fileName, $fileExt) = explode(".", $post_image);
+						$post_image = rtrim($fileName, strval($i-1)) . $i . "." . $fileExt;
+						$i++;
+                    }
+                    $post_image_move = $upload_dir . "/" . $post_image;
+                    echo $post_image_move;
+                }
+
+                //move_uploaded_file($post_image_temp, "../images/$post_image");
 
                 var_dump($_POST);
                 var_dump($_FILES);
-                echo $post_date;
+                //echo $post_date;
+                // echo "<br />";
+                // echo $post_date_unix;
+                // echo "<br />";
+                // echo $post_date_page;
                 echo "<br />";
                 echo $post_comment_count;
+
+                // $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count)
+                //                          VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
+                // $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
+                // if ($query->execute()) {
+                //     echo ('<div class="alert alert-success text-center"><strong>Članak dodan.</strong></div>');
+                // } else {
+                //     echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
+                // }
             }
             ?>
 
@@ -53,7 +93,7 @@
                 </div>
                 <div class="form-group">
                     <label for="post_image" class="font-weight-bold">Slika članka</label>
-                    <input type="file" class="form-control" name="post_image" required>
+                    <input type="file" class="form-control" name="post_image" accept="image/png, image/jpeg, image/gif, image/bmp" required>
                     <div class="invalid-feedback">Slika članka je obavezna!</div>
                 </div>
                 <div class="form-group">
@@ -70,6 +110,7 @@
                     <button class="btn btn-success" type="submit" name="create_post">Dodaj članak</button>
                 </div>
             </form>
+            <!-- // Dodavanje clanka -->
         </main>
     </div>
 </div>

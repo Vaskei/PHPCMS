@@ -19,7 +19,7 @@
 
             <?php 
             
-            $query = "SELECT * FROM posts";
+            $query = "SELECT * FROM posts ORDER BY post_date DESC";
             $rezultat = $db->query($query);
             if ($rezultat) {
                 while ($redak = $rezultat->fetch_assoc()) {
