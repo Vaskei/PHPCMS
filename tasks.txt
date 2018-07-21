@@ -1,2 +1,12 @@
 Dodavanje kategorija - provjera dali postoji kategorija
 Uredivanje kategorija - bolja provjera postojanosti kategorije
+Kategorije/clanci - omoguciti upisivanje rijeci sa hrvatskim slovima
+
+=================================
+Add posts rules
+	- post_title - naslov - 255, obavezan
+	- post_category - kategorija - 50, obavezna
+	- post_author - autor - 255, obavezan
+	- post_image - slika - 1MB, obavezna
+	- post_tags - tagovi - 255, obavezni
+	- post_content - sdarzaj - obavezan

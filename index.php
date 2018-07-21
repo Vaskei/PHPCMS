@@ -4,7 +4,6 @@
 <!-- Navigation -->
 <?php require_once "includes/navigation.php"; ?>
 
-
 <!-- Page Content -->
 <div class="container sadrzaj">
 
@@ -42,6 +41,7 @@
                         <div class="card-footer text-muted">
                             Posted on <?php echo $post_vrijeme ?> by
                             <a href="#"><?php echo $post_autor; ?></a>
+                            <p><?php echo date('d.m.Y. H:i', strtotime($post_vrijeme)); ?></p>
                         </div>
                     </div><?php 
                 }

@@ -29,7 +29,7 @@
                 $allowed_MIME = array("image/jpeg", "image/gif", "image/png", "image/bmp");
 
                 if (!empty($_FILES['post_image']['type'])&&!in_array($_FILES['post_image']['type'], $allowed_MIME)) {
-                    echo ('<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg ili png)!</strong></div>');
+                    echo ('<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)!</strong></div>');
                 } else {
                     $post_image_temp = $_FILES['post_image']['tmp_name'];
                     $post_image = basename($_FILES['post_image']['name']);
@@ -49,12 +49,27 @@
 						$i++;
                     }
                     $post_image_move = $upload_dir . "/" . $post_image;
-                    echo $post_image_move;
+                    echo "post_image_move " . $post_image_move;
+                    echo "<br />";
+                    if (move_uploaded_file($post_image_temp, $post_image_move)) {
+                        $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count)
+                        VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
+                        $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
+                        if ($query->execute()) {
+                            echo ('<div class="alert alert-success text-center"><strong>Članak dodan.</strong></div>');
+                        } else {
+                            echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
+                        }
+                    } else {
+                        '<div class="alert alert-success text-center"><strong>Pogreška s spremanjem slike!</strong></div>';
+                    }
                 }
 
                 //move_uploaded_file($post_image_temp, "../images/$post_image");
 
+                echo "var_dump POST: <br />";
                 var_dump($_POST);
+                echo "var_dump FILES: <br />";
                 var_dump($_FILES);
                 //echo $post_date;
                 // echo "<br />";
@@ -62,7 +77,8 @@
                 // echo "<br />";
                 // echo $post_date_page;
                 echo "<br />";
-                echo $post_comment_count;
+                echo "post_comment_count = " . $post_comment_count;
+                echo "<br />";
 
                 // $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count)
                 //                          VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
@@ -75,30 +91,41 @@
             }
             ?>
 
-            <form class="form_validation" action="" method="post" enctype="multipart/form-data" novalidate>
+            <form class="form_validation" action="" method="POST" enctype="multipart/form-data" novalidate>
                 <div class="form-group">
                     <label for="post_title" class="font-weight-bold">Naslov članka</label>
-                    <input type="text" class="form-control" name="post_title" maxlength="255" required>
+                    <input type="text" class="form-control" name="post_title" id="post_title" maxlength="255" required>
                     <div class="invalid-feedback">Naslov članka je obavezan!</div>
                 </div>
                 <div class="form-group">
                     <label for="post_category" class="font-weight-bold">Kategorija članka</label>
-                    <input type="text" class="form-control" name="post_category" required>
+                    <?php
+                        $query = "SELECT * FROM categories";
+                        $rezultat = $db->query($query);
+                        echo '<select class="custom-select" name="post_category" id="post_category" required>';
+                        echo '<option selected value="">Odaberite kategoriju.</option>';
+                        if ($rezultat) {
+                            while ($redak = $rezultat->fetch_assoc()) {
+                                echo '<option value="' . $redak['cat_id'] . '">' . $redak['cat_title'] . '</option>';
+                            }
+                        }
+                        echo '</select>';
+                    ?>
                     <div class="invalid-feedback">Kategorija članka je obavezna!</div>
                 </div>
                 <div class="form-group">
                     <label for="post_author" class="font-weight-bold">Autor članka</label>
-                    <input type="text" class="form-control" name="post_author" maxlength="255" required>
+                    <input type="text" class="form-control" name="post_author" id="post_author" maxlength="255" required>
                     <div class="invalid-feedback">Autor članka je obavezan!</div>
                 </div>
                 <div class="form-group">
                     <label for="post_image" class="font-weight-bold">Slika članka</label>
-                    <input type="file" class="form-control" name="post_image" accept="image/png, image/jpeg, image/gif, image/bmp" required>
+                    <input type="file" class="form-control" name="post_image" id="post_image" accept="image/png, image/jpeg, image/gif, image/bmp" required>
                     <div class="invalid-feedback">Slika članka je obavezna!</div>
                 </div>
                 <div class="form-group">
                     <label for="post_tags" class="font-weight-bold">Tagovi</label>
-                    <input type="text" class="form-control" name="post_tags" maxlength="255" required>
+                    <input type="text" class="form-control" name="post_tags" id="post_tags" maxlength="255" required>
                     <div class="invalid-feedback">Tagovi članka su obavezni! Stavite barem jedan tag vezan uz sadržaj članka.</div>
                 </div>
                 <div class="form-group">
