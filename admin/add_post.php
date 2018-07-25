@@ -5,6 +5,8 @@
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>
 
+<?php session_start() ?>
+
 <!-- Page Content -->
 <div class="container-fluid h-100">
     <div class="row h-100">
@@ -12,6 +14,14 @@
         <main class="col bg-faded py-3">
             <h2>Dodavanje članka</h2>
             <hr>
+
+            <!-- Ispisivanje poruke preko sesije -->
+            <?php
+            if (isset($_SESSION['msg']) && $_SESSION['msg'] != '') {
+                echo $_SESSION['msg'];
+                unset($_SESSION['msg']);
+            }
+            ?>
 
             <!-- Dodavanje clanka -->
             <?php
@@ -29,8 +39,14 @@
                 $allowed_MIME = array("image/jpeg", "image/gif", "image/png", "image/bmp");
 
                 if (!empty($_FILES['post_image']['type'])&&!in_array($_FILES['post_image']['type'], $allowed_MIME)) {
-                    echo ('<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)!</strong></div>');
-                } else {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)!</strong></div>';
+                    header("Location: ./add_post");
+                } else if ($_FILES['post_image']['size'] > 1048576) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Slika je prevelika! (Max. 1MB)!</strong></div>';
+                    header("Location: ./add_post");
+                } 
+                
+                else {
                     $post_image_temp = $_FILES['post_image']['tmp_name'];
                     $post_image = basename($_FILES['post_image']['name']);
                     
@@ -51,18 +67,18 @@
                     $post_image_move = $upload_dir . "/" . $post_image;
                     echo "post_image_move " . $post_image_move;
                     echo "<br />";
-                    if (move_uploaded_file($post_image_temp, $post_image_move)) {
-                        $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count)
-                        VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
-                        $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
-                        if ($query->execute()) {
-                            echo ('<div class="alert alert-success text-center"><strong>Članak dodan.</strong></div>');
-                        } else {
-                            echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
-                        }
-                    } else {
-                        '<div class="alert alert-success text-center"><strong>Pogreška s spremanjem slike!</strong></div>';
-                    }
+                    // if (move_uploaded_file($post_image_temp, $post_image_move)) {
+                    //     $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_image, post_content, post_tags, post_comment_count)
+                    //     VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    //     $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
+                    //     if ($query->execute()) {
+                    //         echo ('<div class="alert alert-success text-center"><strong>Članak dodan.</strong></div>');
+                    //     } else {
+                    //         echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
+                    //     }
+                    // } else {
+                    //     '<div class="alert alert-success text-center"><strong>Pogreška s spremanjem slike!</strong></div>';
+                    // }
                 }
 
                 //move_uploaded_file($post_image_temp, "../images/$post_image");
@@ -115,7 +131,7 @@
                 </div>
                 <div class="form-group">
                     <label for="post_author" class="font-weight-bold">Autor članka</label>
-                    <input type="text" class="form-control" name="post_author" id="post_author" maxlength="255" required>
+                    <input type="text" class="form-control" name="post_author" id="post_author" maxlength="50" required>
                     <div class="invalid-feedback">Autor članka je obavezan!</div>
                 </div>
                 <div class="form-group">
