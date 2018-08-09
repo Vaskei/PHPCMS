@@ -9,6 +9,6 @@ Add posts rules
 	- post_author - autor - 50, obavezan
 	- post_image - slika - 1MB, obavezna
 	- post_tags - tagovi - 255, obavezni
-	- post_content - sdarzaj - obavezan
+	- post_content - sadrzaj - obavezan
 
 username = author - 50

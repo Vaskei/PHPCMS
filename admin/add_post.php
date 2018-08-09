@@ -38,15 +38,31 @@
 
                 $allowed_MIME = array("image/jpeg", "image/gif", "image/png", "image/bmp");
 
-                if (!empty($_FILES['post_image']['type'])&&!in_array($_FILES['post_image']['type'], $allowed_MIME)) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)!</strong></div>';
+                if (empty($post_title) || strlen($post_title) > 255) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Naslov članka je obavezan! (Max. 255 znakova)</strong></div>';
+                    header("Location: ./add_post");
+                } else if (empty($post_category)) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Kategorija članka je obavezna!</strong></div>';
+                    header("Location: ./add_post");
+                } else if (empty($post_author) || strlen($post_author) > 50) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Autor članka je obavezan! (Max. 50 znakova)</strong></div>';
+                    header("Location: ./add_post");
+                } else if (!empty($_FILES['post_image']['type'])&&!in_array($_FILES['post_image']['type'], $allowed_MIME)) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)</strong></div>';
                     header("Location: ./add_post");
                 } else if ($_FILES['post_image']['size'] > 1048576) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Slika je prevelika! (Max. 1MB)!</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Slika je prevelika! (Max. 1MB)</strong></div>';
                     header("Location: ./add_post");
-                } 
-                
-                else {
+                } else if (empty($_FILES['post_image']['name'])) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Slika je obavezna! (Max. 1MB)</strong></div>';
+                    header("Location: ./add_post");
+                } else if (empty($post_tags) || strlen($post_tags) > 255) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Tagovi članka su obavezni! Stavite barem jedan tag vezan uz sadržaj članka. (Max. 255 znakova)</strong></div>';
+                    header("Location: ./add_post");
+                } else if (empty($post_content)) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Sadržaj članka je obavezan!</strong></div>';
+                    header("Location: ./add_post");
+                } else {
                     $post_image_temp = $_FILES['post_image']['tmp_name'];
                     $post_image = basename($_FILES['post_image']['name']);
                     
@@ -67,18 +83,21 @@
                     $post_image_move = $upload_dir . "/" . $post_image;
                     echo "post_image_move " . $post_image_move;
                     echo "<br />";
-                    // if (move_uploaded_file($post_image_temp, $post_image_move)) {
-                    //     $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_image, post_content, post_tags, post_comment_count)
-                    //     VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    //     $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
-                    //     if ($query->execute()) {
-                    //         echo ('<div class="alert alert-success text-center"><strong>Članak dodan.</strong></div>');
-                    //     } else {
-                    //         echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
-                    //     }
-                    // } else {
-                    //     '<div class="alert alert-success text-center"><strong>Pogreška s spremanjem slike!</strong></div>';
-                    // }
+                    if (move_uploaded_file($post_image_temp, $post_image_move)) {
+                        $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_image, post_content, post_tags, post_comment_count)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
+                        if ($query->execute()) {
+                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Članak dodan.</strong></div>';
+                            header("Location: ./add_post");
+                        } else {
+                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Greška!</strong></div>';
+                            header("Location: ./add_post");
+                        }
+                    } else {
+                        $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Pogreška s spremanjem slike!</strong></div>';
+                        header("Location: ./add_post");
+                    }
                 }
 
                 //move_uploaded_file($post_image_temp, "../images/$post_image");
@@ -111,7 +130,7 @@
                 <div class="form-group">
                     <label for="post_title" class="font-weight-bold">Naslov članka</label>
                     <input type="text" class="form-control" name="post_title" id="post_title" maxlength="255" required>
-                    <div class="invalid-feedback">Naslov članka je obavezan!</div>
+                    <div class="invalid-feedback">Naslov članka je obavezan! (Max. 255 znakova)</div>
                 </div>
                 <div class="form-group">
                     <label for="post_category" class="font-weight-bold">Kategorija članka</label>
@@ -132,7 +151,7 @@
                 <div class="form-group">
                     <label for="post_author" class="font-weight-bold">Autor članka</label>
                     <input type="text" class="form-control" name="post_author" id="post_author" maxlength="50" required>
-                    <div class="invalid-feedback">Autor članka je obavezan!</div>
+                    <div class="invalid-feedback">Autor članka je obavezan! (Max. 50 znakova)</div>
                 </div>
                 <div class="form-group">
                     <label for="post_image" class="font-weight-bold">Slika članka</label>
@@ -142,7 +161,7 @@
                 <div class="form-group">
                     <label for="post_tags" class="font-weight-bold">Tagovi</label>
                     <input type="text" class="form-control" name="post_tags" id="post_tags" maxlength="255" required>
-                    <div class="invalid-feedback">Tagovi članka su obavezni! Stavite barem jedan tag vezan uz sadržaj članka.</div>
+                    <div class="invalid-feedback">Tagovi članka su obavezni! Stavite barem jedan tag vezan uz sadržaj članka. (Max. 255 znakova)</div>
                 </div>
                 <div class="form-group">
                     <label for="post_content" class="font-weight-bold">Sadržaj članka</label>
