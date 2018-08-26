@@ -1,11 +1,10 @@
+<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Kategorije"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>
-
-<?php session_start() ?>
 
 <!-- Page Content -->
 <div class="container-fluid h-100">

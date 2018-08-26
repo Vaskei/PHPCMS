@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/phpcms_admin.css">
 
     <title> <?php echo $title; ?> </title>
+
 </head>
 
 <body>

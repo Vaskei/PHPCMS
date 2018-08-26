@@ -1,11 +1,10 @@
+<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Dodavanje članka"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>
-
-<?php session_start() ?>
 
 <!-- Page Content -->
 <div class="container-fluid h-100">
@@ -176,5 +175,11 @@
         </main>
     </div>
 </div>
+
+<?php 
+echo '<script>
+    document.querySelector("#posts_submenu").classList.add("show");
+</script>';
+?>
 
 <?php require_once "includes/admin_footer.php"; ?>
