@@ -1,11 +1,10 @@
+<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Dodavanje članka"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>
-
-<?php session_start() ?>
 
 <!-- Page Content -->
 <div class="container-fluid h-100">
@@ -39,28 +38,28 @@
                 $allowed_MIME = array("image/jpeg", "image/gif", "image/png", "image/bmp");
 
                 if (empty($post_title) || strlen($post_title) > 255) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Naslov članka je obavezan! (Max. 255 znakova)</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Naslov članka je obavezan! (Max. 255 znakova)</strong></div>';
                     header("Location: ./add_post");
                 } else if (empty($post_category)) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Kategorija članka je obavezna!</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Kategorija članka je obavezna!</strong></div>';
                     header("Location: ./add_post");
                 } else if (empty($post_author) || strlen($post_author) > 50) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Autor članka je obavezan! (Max. 50 znakova)</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Autor članka je obavezan! (Max. 50 znakova)</strong></div>';
                     header("Location: ./add_post");
                 } else if (!empty($_FILES['post_image']['type'])&&!in_array($_FILES['post_image']['type'], $allowed_MIME)) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)</strong></div>';
                     header("Location: ./add_post");
                 } else if ($_FILES['post_image']['size'] > 1048576) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Slika je prevelika! (Max. 1MB)</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Slika je prevelika! (Max. 1MB)</strong></div>';
                     header("Location: ./add_post");
                 } else if (empty($_FILES['post_image']['name'])) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Slika je obavezna! (Max. 1MB)</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Slika je obavezna! (Max. 1MB)</strong></div>';
                     header("Location: ./add_post");
                 } else if (empty($post_tags) || strlen($post_tags) > 255) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Tagovi članka su obavezni! Stavite barem jedan tag vezan uz sadržaj članka. (Max. 255 znakova)</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Tagovi članka su obavezni! Stavite barem jedan tag vezan uz sadržaj članka. (Max. 255 znakova)</strong></div>';
                     header("Location: ./add_post");
                 } else if (empty($post_content)) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Sadržaj članka je obavezan!</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Sadržaj članka je obavezan!</strong></div>';
                     header("Location: ./add_post");
                 } else {
                     $post_image_temp = $_FILES['post_image']['tmp_name'];
@@ -88,14 +87,14 @@
                         VALUES (?, ?, ?, ?, ?, ?, ?)");
                         $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
                         if ($query->execute()) {
-                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Članak dodan.</strong></div>';
+                            $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Članak dodan.</strong></div>';
                             header("Location: ./add_post");
                         } else {
-                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Greška!</strong></div>';
+                            $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Greška!</strong></div>';
                             header("Location: ./add_post");
                         }
                     } else {
-                        $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Pogreška s spremanjem slike!</strong></div>';
+                        $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Pogreška s spremanjem slike!</strong></div>';
                         header("Location: ./add_post");
                     }
                 }
@@ -119,9 +118,9 @@
                 //                          VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
                 // $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
                 // if ($query->execute()) {
-                //     echo ('<div class="alert alert-success text-center"><strong>Članak dodan.</strong></div>');
+                //     echo ('<div class="alert alert-success text-center alertFadeout"><strong>Članak dodan.</strong></div>');
                 // } else {
-                //     echo ('<div class="alert alert-warning text-center"><strong>Greška!</strong></div>');
+                //     echo ('<div class="alert alert-warning text-center alertFadeout"><strong>Greška!</strong></div>');
                 // }
             }
             ?>
@@ -176,5 +175,11 @@
         </main>
     </div>
 </div>
+
+<?php 
+echo '<script>
+    document.querySelector("#posts_submenu").classList.add("show");
+</script>';
+?>
 
 <?php require_once "includes/admin_footer.php"; ?>

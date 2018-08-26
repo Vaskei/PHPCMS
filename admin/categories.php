@@ -1,11 +1,10 @@
+<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Kategorije"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>
-
-<?php session_start() ?>
 
 <!-- Page Content -->
 <div class="container-fluid h-100">
@@ -44,10 +43,10 @@
                         //var_dump($_POST);
                         $imeKategorije = htmlentities(trim($_POST['catTitle']));
                         if ($imeKategorije == "" || empty($imeKategorije)) {
-                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Upišite ime kategorije!</strong></div>';
+                            $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Upišite ime kategorije!</strong></div>';
                             header("Location: ./categories");
                         } else if (strlen($imeKategorije) > 50) {
-                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Kategorija ima više od 50 znakova!</strong></div>';
+                            $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Kategorija ima više od 50 znakova!</strong></div>';
                             header("Location: ./categories");
                         } else {
                             $query = $db->prepare('SELECT * FROM categories WHERE cat_title=? LIMIT 1');
@@ -55,21 +54,21 @@
                             if ($query->execute()) {
                                 $result=$query->get_result();
                                 if (count($result->fetch_array())) {
-                                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Kategorija već postoji u bazi!</strong></div>';
+                                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Kategorija već postoji u bazi!</strong></div>';
                                     header("Location: ./categories");
                                 } else {
                                     $query = $db->prepare("INSERT INTO categories (cat_title) VALUES (?)");
                                     $query->bind_param("s", $imeKategorije);
                                     if ($query->execute()) {
-                                        $_SESSION['msg'] = '<div class="alert alert-success text-center"><strong>Kategorija dodana.</strong></div>';
+                                        $_SESSION['msg'] = '<div class="alert alert-success text-center alertFadeout"><strong>Kategorija dodana.</strong></div>';
                                         header("Location: ./categories");
                                     } else {
-                                        $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Greška!</strong></div>';
+                                        $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Greška!</strong></div>';
                                         header("Location: ./categories");
                                     }
                                 }
                             } else {
-                                $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Nije moguće čitati bazu!</strong></div>';
+                                $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Nije moguće čitati bazu!</strong></div>';
                                 header("Location: ./categories");
                             }                            
                         }
@@ -91,20 +90,18 @@
                         </div>
 
                         <?php
-
-                        if (isset($_POST['catEdit'])) {
-                            var_dump($_POST);
-                            $idEdit = $_POST['idEdit'];
-                            //echo $idEdit;
-                            $query = $db->prepare("SELECT * FROM categories WHERE cat_id = ? LIMIT 1");
-                            $query->bind_param("i", $idEdit);
-                            if ($query->execute()) {
-                                $result = $query->get_result();
-                                $rowEdit = $result->fetch_assoc();
-                                var_dump($rowEdit);
-                            }
-                        } 
-
+                        // if (isset($_POST['catEdit'])) {
+                        //     var_dump($_POST);
+                        //     $idEdit = $_POST['idEdit'];
+                        //     //echo $idEdit;
+                        //     $query = $db->prepare("SELECT * FROM categories WHERE cat_id = ? LIMIT 1");
+                        //     $query->bind_param("i", $idEdit);
+                        //     if ($query->execute()) {
+                        //         $result = $query->get_result();
+                        //         $rowEdit = $result->fetch_assoc();
+                        //         var_dump($rowEdit);
+                        //     }
+                        // } 
                         ?>
 
                         <div class="input-group">
@@ -129,10 +126,10 @@
                             // echo($catNaslovEdit);
                             // echo("<br>");
                             if ($catNameEdit == "" || empty($catNameEdit)) {
-                                $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Ime kategorije je prazno! Pokušajte ponovno.</strong></div>';
+                                $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Ime kategorije je prazno! Pokušajte ponovno.</strong></div>';
                                 header("Location: ./categories");
                             }else if (strlen($catNameEdit) > 50) {
-                                $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Kategorija ima više od 50 znakova!</strong></div>';
+                                $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Kategorija ima više od 50 znakova!</strong></div>';
                                 header("Location: ./categories");
                             } else {
                                 //var_dump($_POST);
@@ -141,34 +138,34 @@
                                 if ($query->execute()) {
                                     $result=$query->get_result();
                                     if (count($result->fetch_array())) {
-                                        //echo ('<div class="alert alert-warning text-center"><strong>Kategorija već postoji u bazi!</strong></div>');
-                                        $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Kategorija već postoji u bazi!</strong></div>';
+                                        //echo ('<div class="alert alert-warning text-center alertFadeout"><strong>Kategorija već postoji u bazi!</strong></div>');
+                                        $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Kategorija već postoji u bazi!</strong></div>';
                                         header("Location: ./categories");
                                     } else {
                                         $query=$db->prepare('UPDATE categories SET cat_title=? WHERE cat_id=?');
                                         $query->bind_param('si', $catNameEdit, $idEdit);
                                         if ($query->execute()) {
-                                            //echo ('<div class="alert alert-success text-center"><strong>Kategorija izmjenjena.</strong></div>');
-                                            $_SESSION['msg'] = '<div class="alert alert-success text-center"><strong>Kategorija izmjenjena.</strong></div>';
+                                            //echo ('<div class="alert alert-success text-center alertFadeout"><strong>Kategorija izmjenjena.</strong></div>');
+                                            $_SESSION['msg'] = '<div class="alert alert-success text-center alertFadeout"><strong>Kategorija izmjenjena.</strong></div>';
                                             header("Location: ./categories");
                                             // header("Location: ./categories?editsuccess");
                                         } else {
-                                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Greška!</strong></div>';
+                                            $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Greška!</strong></div>';
                                             header("Location: ./categories");
                                         }
                                     }
                                 } else {
-                                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Nije moguće čitati bazu!</strong></div>';
+                                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Nije moguće čitati bazu!</strong></div>';
                                     header("Location: ./categories");
                                 }      
                             }
                         } else if (isset($_POST['submitEdit']) && empty($_POST['submitEdit'])) {
-                            $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Niste odabrali kategoriju za uređivanje!</strong></div>';
+                            $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Niste odabrali kategoriju za uređivanje!</strong></div>';
                             header("Location: ./categories");
                         }
                         
                         // if (isset($_GET['editsuccess'])) {
-                        //     echo ('<div class="alert alert-success text-center"><strong>Kategorija izmjenjena.</strong></div>');
+                        //     echo ('<div class="alert alert-success text-center alertFadeout"><strong>Kategorija izmjenjena.</strong></div>');
                         // }
                         ?>
 
@@ -187,10 +184,10 @@
             //     $query = $db->prepare("DELETE FROM categories WHERE cat_id = ?");
             //     $query->bind_param("i", $idBrisanje);
             //     if ($query->execute()) {
-            //         $_SESSION['msg'] = '<div class="alert alert-danger text-center"><strong>Kategorija obrisana.</strong></div>';
+            //         $_SESSION['msg'] = '<div class="alert alert-danger text-center alertFadeout"><strong>Kategorija obrisana.</strong></div>';
             //         header("Location: ./categories");
             //     } else {
-            //         $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Greška!</strong></div>';
+            //         $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Greška!</strong></div>';
             //         header("Location: ./categories");
             //     }
             // }
@@ -200,10 +197,10 @@
                 $query = $db->prepare("DELETE FROM categories WHERE cat_id = ?");
                 $query->bind_param("i", $idDelete);
                 if ($query->execute()) {
-                    $_SESSION['msg'] = '<div class="alert alert-danger text-center"><strong>Kategorija obrisana.</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-danger text-center alertFadeout"><strong>Kategorija obrisana.</strong></div>';
                     header("Location: ./categories");
                 } else {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center"><strong>Greška!</strong></div>';
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Greška!</strong></div>';
                     header("Location: ./categories");
                 }
             }
@@ -234,22 +231,22 @@
                                     echo "<td>" . $redak['cat_id'] . "</td>";
                                     echo "<td>" . $redak['cat_title'] . "</td>";
                                     echo "<td>                                    
-                                    <div class='btn-group' role='group' aria-label='Button group'>
-                                        <form action='' method='post'>
-                                            <input type='hidden' name='idEdit' value='" . $redak['cat_id'] . "' />
-                                            <input type='submit' value='Uredi' name='catEdit' class='btn btn-info gumb_kategorija'></input>
-                                        </form>
-                                        <form action='' method='post'>
-                                            <input type='hidden' name='idDelete' value='" . $redak['cat_id'] . "' />
-                                            <input type='submit' value='Brisi' name='catDelete' class='btn btn-danger gumb_kategorija'
-                                                data-toggle='confirmation' data-singleton='true' 
-                                                data-placement='right' data-title='Obrisati kategoriju?' 
-                                                data-btn-ok-label='DA' data-btn-ok-class='btn-success'
-                                                data-btn-ok-icon-class='fa fa-check' data-btn-ok-icon-content=' '
-                                                data-btn-cancel-label='NE' data-btn-cancel-class='btn-danger'
-                                                data-btn-cancel-icon-class='fa fa-times' data-btn-cancel-icon-content=' '></input>
-                                        </form>
-                                    </div>
+                                        <div class='btn-group' role='group' aria-label='Button group'>
+                                            <form action='' method='post'>
+                                                <input type='hidden' name='idEdit' value='" . $redak['cat_id'] . "' />
+                                                <input type='submit' value='Uredi' name='catEdit' class='btn btn-info gumb_kategorija'></input>
+                                            </form>
+                                            <form action='' method='post'>
+                                                <input type='hidden' name='idDelete' value='" . $redak['cat_id'] . "' />
+                                                <input type='submit' value='Briši' name='catDelete' class='btn btn-danger gumb_kategorija'
+                                                    data-toggle='confirmation' data-singleton='true' 
+                                                    data-placement='right' data-title='Obrisati kategoriju?' 
+                                                    data-btn-ok-label='DA' data-btn-ok-class='btn-success'
+                                                    data-btn-ok-icon-class='fa fa-check' data-btn-ok-icon-content=' '
+                                                    data-btn-cancel-label='NE' data-btn-cancel-class='btn-danger'
+                                                    data-btn-cancel-icon-class='fa fa-times' data-btn-cancel-icon-content=' '></input>
+                                            </form>
+                                        </div>
                                     </td>";
                                     echo "<tr>";
                                 }

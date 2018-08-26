@@ -1,16 +1,29 @@
+<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Članci"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
+
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>
+
+
 
 <!-- Page Content -->
 <div class="container-fluid h-100">
     <div class="row h-100">
         <?php require_once "includes/admin_sidebar.php"; ?>
         <main class="col bg-faded py-3">
-            <h2>Članci</h2>
+            <h2>
+                Članci
+                <?php
+                if (isset($_SESSION['msg']) && $_SESSION['msg'] != '') {
+                    echo $_SESSION['msg'];
+                    unset($_SESSION['msg']);
+                }
+                ?>                                             
+            </h2>
+
             <hr>
 
             <!-- Ispis članaka u tablicu -->
@@ -58,9 +71,21 @@
                                     echo "<td>$post_date</td>";
                                     echo "<td>
                                         <div class='btn-group' role='group' aria-label='Button group'>
-                                            <a class='btn btn-info gumb_kategorija' role='button' href='edit_post.php?edit=" . $redak['post_id'] . "'>Uredi</a>
-                                            <a class='btn btn-danger gumb_kategorija' role='button' href='posts.php?delete=" . $redak['post_id'] . "'>Obriši</a>
-                                        </div>  
+                                            <form action='edit_post' method='post'>
+                                                <input type='hidden' name='idEdit' value='" . $redak['post_id'] . "' />
+                                                <input type='submit' value='Uredi' name='postEdit' class='btn btn-info gumb_kategorija'></input>
+                                            </form>
+                                            <form action='' method='post'>
+                                                <input type='hidden' name='idDelete' value='" . $redak['post_id'] . "' />
+                                                <input type='submit' value='Briši' name='postDelete' class='btn btn-danger gumb_kategorija'
+                                                    data-toggle='confirmation' data-singleton='true' 
+                                                    data-placement='right' data-title='Obrisati članak?' 
+                                                    data-btn-ok-label='DA' data-btn-ok-class='btn-success'
+                                                    data-btn-ok-icon-class='fa fa-check' data-btn-ok-icon-content=' '
+                                                    data-btn-cancel-label='NE' data-btn-cancel-class='btn-danger'
+                                                    data-btn-cancel-icon-class='fa fa-times' data-btn-cancel-icon-content=' '></input>
+                                            </form>
+                                        </div>
                                     </td>";
                                     echo "<tr>";
                                 }
@@ -72,8 +97,32 @@
             </div>
             <!-- Ispis članaka u tablicu -->
 
+            <!-- Brisanje članka  -->
+            <?php
+            if (isset($_POST['postDelete'])) {
+                $idDelete = $_POST['idDelete'];
+                $query = $db->prepare("DELETE FROM posts WHERE post_id = ?");
+                $query->bind_param("i", $idDelete);
+                if ($query->execute()) {
+                    $_SESSION['msg'] = '<small class="text-danger alertFadeout"><strong> <u>Odabrani članak obrisan.</u> </strong></small>';
+                    header("Location: ./posts");
+                } else {
+                    $_SESSION['msg'] = '<small class="text-danger alertFadeout"><strong> <u>Greška kod brisanja!</u> </strong></small>';
+                    header("Location: ./posts");
+                }
+            }
+            ?>
+
+            <!-- // Brisanje članka  -->
+
         </main>
     </div>
 </div>
+
+<?php 
+echo '<script>
+    document.querySelector("#posts_submenu").classList.add("show");
+</script>';
+?>
 
 <?php require_once "includes/admin_footer.php"; ?>

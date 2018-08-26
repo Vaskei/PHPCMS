@@ -11,14 +11,14 @@
         </button>
         <div class="collapse navbar-collapse" id="adminSidebar">
             <ul class="flex-column navbar-nav">
-                <li class="nav-item <?php echoActiveClass("posts") || echoActiveClass("add_post") ?>">
+                <li class="nav-item <?php echoActiveClass("posts") || echoActiveClass("add_post") || echoActiveClass("edit_post")?>">
                     <a class="nav-link pl-0 dropdown-toggle" href="#posts_submenu" data-parent="#adminSidebar" data-toggle="collapse" data-target="#posts_submenu"
                         aria-expanded="false">
                         <i class="fa fa-book fa-fw"></i>&nbsp;Članci
                     </a>
                     <div class="collapse" id="posts_submenu">
                         <ul class="flex-column nav">
-                            <a class="nav-link <?php echoActiveClass("posts") ?>" href="posts">
+                            <a class="nav-link <?php echoActiveClass("posts") || echoActiveClass("edit_post")?>" href="posts">
                                 <i class="fa fa-files-o fa-fw"></i>&nbsp;Svi članci
                             </a>
                             <a class="nav-link <?php echoActiveClass("add_post") ?>" href="add_post">
