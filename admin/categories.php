@@ -90,20 +90,18 @@
                         </div>
 
                         <?php
-
-                        if (isset($_POST['catEdit'])) {
-                            var_dump($_POST);
-                            $idEdit = $_POST['idEdit'];
-                            //echo $idEdit;
-                            $query = $db->prepare("SELECT * FROM categories WHERE cat_id = ? LIMIT 1");
-                            $query->bind_param("i", $idEdit);
-                            if ($query->execute()) {
-                                $result = $query->get_result();
-                                $rowEdit = $result->fetch_assoc();
-                                var_dump($rowEdit);
-                            }
-                        } 
-
+                        // if (isset($_POST['catEdit'])) {
+                        //     var_dump($_POST);
+                        //     $idEdit = $_POST['idEdit'];
+                        //     //echo $idEdit;
+                        //     $query = $db->prepare("SELECT * FROM categories WHERE cat_id = ? LIMIT 1");
+                        //     $query->bind_param("i", $idEdit);
+                        //     if ($query->execute()) {
+                        //         $result = $query->get_result();
+                        //         $rowEdit = $result->fetch_assoc();
+                        //         var_dump($rowEdit);
+                        //     }
+                        // } 
                         ?>
 
                         <div class="input-group">

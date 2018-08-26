@@ -71,7 +71,7 @@
                                     echo "<td>$post_date</td>";
                                     echo "<td>
                                         <div class='btn-group' role='group' aria-label='Button group'>
-                                            <form action='' method='post'>
+                                            <form action='edit_post' method='post'>
                                                 <input type='hidden' name='idEdit' value='" . $redak['post_id'] . "' />
                                                 <input type='submit' value='Uredi' name='postEdit' class='btn btn-info gumb_kategorija'></input>
                                             </form>
@@ -99,7 +99,6 @@
 
             <!-- Brisanje članka  -->
             <?php
-
             if (isset($_POST['postDelete'])) {
                 $idDelete = $_POST['idDelete'];
                 $query = $db->prepare("DELETE FROM posts WHERE post_id = ?");
@@ -112,7 +111,6 @@
                     header("Location: ./posts");
                 }
             }
-
             ?>
 
             <!-- // Brisanje članka  -->
