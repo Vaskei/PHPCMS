@@ -1,5 +1,5 @@
 // Skrivanje svih alert-ova nakon 2 sekunde
-$(".alert").delay(2000).fadeOut();
+$(".alertFadeout").delay(2000).fadeOut();
 
 // Validacija forme
 (function () {
