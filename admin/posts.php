@@ -104,10 +104,10 @@
                 $query = $db->prepare("DELETE FROM posts WHERE post_id = ?");
                 $query->bind_param("i", $idDelete);
                 if ($query->execute()) {
-                    $_SESSION['msg'] = '<small class="text-danger alertFadeout"><strong> <u>Odabrani članak obrisan.</u> </strong></small>';
+                    $_SESSION['msg'] = '<small class="text-danger alertFadeout"><strong> <u>ODABRANI ČLANAK OBRISAN.</u> </strong></small>';
                     header("Location: ./posts");
                 } else {
-                    $_SESSION['msg'] = '<small class="text-danger alertFadeout"><strong> <u>Greška kod brisanja!</u> </strong></small>';
+                    $_SESSION['msg'] = '<small class="text-danger alertFadeout"><strong> <u>GREŠKA KOD BRISANJA!</u> </strong></small>';
                     header("Location: ./posts");
                 }
             }

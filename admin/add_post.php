@@ -142,6 +142,8 @@
                             while ($redak = $rezultat->fetch_assoc()) {
                                 echo '<option value="' . $redak['cat_id'] . '">' . $redak['cat_title'] . '</option>';
                             }
+                        } else {
+                            echo '<option selected value="">Niste dodali barem jednu kategoriju.</option>';
                         }
                         echo '</select>';
                     ?>
