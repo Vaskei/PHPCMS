@@ -46,14 +46,14 @@
                 } else if (empty($post_author) || strlen($post_author) > 50) {
                     $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Autor članka je obavezan! (Max. 50 znakova)</strong></div>';
                     header("Location: ./add_post");
+                } else if (empty($_FILES['post_image']['name'])) {
+                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Slika je obavezna! (Max. 1MB)</strong></div>';
+                    header("Location: ./add_post");
                 } else if (!empty($_FILES['post_image']['type'])&&!in_array($_FILES['post_image']['type'], $allowed_MIME)) {
                     $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Niste odabrali ispravan tip datoteke!!! (gif, jpeg, bmp ili png)</strong></div>';
                     header("Location: ./add_post");
                 } else if ($_FILES['post_image']['size'] > 1048576) {
                     $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Slika je prevelika! (Max. 1MB)</strong></div>';
-                    header("Location: ./add_post");
-                } else if (empty($_FILES['post_image']['name'])) {
-                    $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Slika je obavezna! (Max. 1MB)</strong></div>';
                     header("Location: ./add_post");
                 } else if (empty($post_tags) || strlen($post_tags) > 255) {
                     $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Tagovi članka su obavezni! Stavite barem jedan tag vezan uz sadržaj članka. (Max. 255 znakova)</strong></div>';
@@ -80,8 +80,8 @@
 						$i++;
                     }
                     $post_image_move = $upload_dir . "/" . $post_image;
-                    echo "post_image_move " . $post_image_move;
-                    echo "<br />";
+                    //echo "post_image_move " . $post_image_move;
+                    //echo "<br />";
                     if (move_uploaded_file($post_image_temp, $post_image_move)) {
                         $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_image, post_content, post_tags, post_comment_count)
                         VALUES (?, ?, ?, ?, ?, ?, ?)");
