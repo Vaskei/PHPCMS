@@ -14,13 +14,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Info</a>
-            </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="#">Services</a>
-            </li> -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">Kontakt</a>
+                <a class="nav-link" href="info">Info</a>
             </li>
         </ul>
     </div>

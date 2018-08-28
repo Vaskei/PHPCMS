@@ -3,11 +3,8 @@
 <?php $title = "Admin - Članci"; ?>
 <?php require_once "includes/admin_header.php"; ?>
 
-
 <!-- Navigation -->
 <?php require_once "includes/admin_navigation.php"; ?>
-
-
 
 <!-- Page Content -->
 <div class="container-fluid h-100">

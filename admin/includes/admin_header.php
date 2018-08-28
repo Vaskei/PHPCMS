@@ -21,7 +21,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/phpcms_admin.css">
 
-    <title> <?php echo $title; ?> </title>
+    <title> <?php echo isset($title) ? $title : "Stranica"; ?> </title>
 
 </head>
 

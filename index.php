@@ -1,4 +1,5 @@
 <?php require_once "includes/db.php"; ?>
+<?php $title = "Indeks"; ?>
 <?php require_once "includes/header.php"; ?>
 
 <!-- Navigation -->
@@ -60,7 +61,8 @@
             </ul>
         </div>
         <!-- Sidebar Widgets Column -->
-        <?php require_once "includes/sidelist.php"; ?></div>
+        <?php require_once "includes/sidelist.php"; ?>
+    </div>
     <!-- /.row -->
 
 </div>

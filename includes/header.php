@@ -13,7 +13,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/phpcms.css">
 
-    <title>Hello, world!</title>
+    <title> <?php echo isset($title) ? $title : "Stranica"; ?> </title>
 </head>
 
 <body>
