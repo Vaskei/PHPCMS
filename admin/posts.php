@@ -50,11 +50,13 @@
                                     $post_id = $redak['post_id'];
                                     $post_author = $redak['post_author'];
                                     $post_title = $redak['post_title'];
+                                    $post_title = strlen($post_title) > 20 ? substr($post_title, 0, 20) . "..." : $post_title;
                                     $post_category_id = $redak['post_category_id'];
                                     $cat_title = $redak['cat_title'];
                                     $post_image = $redak['post_image'];
                                     $post_comment_count = $redak['post_comment_count'];
                                     $post_tags = $redak['post_tags'];
+                                    $post_tags = strlen($post_tags) > 20 ? substr($post_tags, 0, 20) . "..." : $post_tags;
                                     $post_date = $redak['post_date'];
                                     
                                     echo "<tr>";

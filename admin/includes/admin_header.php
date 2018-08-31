@@ -1,9 +1,11 @@
 <?php ob_start(); ?>
-<?php function echoActiveClass($navItemUri)
+<?php 
+function echoActiveClass($navItemUri)
 {
     $current_file_name = basename($_SERVER['PHP_SELF'], ".php");
     if ($current_file_name == $navItemUri) echo "active";
-} ?>
+} 
+?>
 <!doctype html>
 <html lang="en">
 

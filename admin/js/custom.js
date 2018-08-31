@@ -1,6 +1,11 @@
 // Skrivanje svih alert-ova nakon 2 sekunde
 $(".alertFadeout").delay(2000).fadeOut();
 
+// Tooltips
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
 // Validacija forme
 (function () {
   'use strict';

@@ -2,6 +2,20 @@
 <?php $title = "Indeks"; ?>
 <?php require_once "includes/header.php"; ?>
 
+<?php
+
+$query = "SELECT * FROM site_options";
+$result = $db->query($query);
+if ($result) {
+    $row = $result->fetch_assoc();
+    //var_dump($row);
+    $siteTitle = trim(htmlentities($row['site_title']));
+    $navbarTitle = trim(htmlentities($row['navbar_title']));
+    $infoText = trim(htmlentities($row['info_text']));
+}
+
+?>
+
 <!-- Navigation -->
 <?php require_once "includes/navigation.php"; ?>
 
@@ -13,8 +27,8 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Page Heading
-                <small>Secondary Text</small>
+            <h1 class="my-4">
+                <?php echo isset($siteTitle)&&!empty($siteTitle) ? $siteTitle : "Naslov stranice"; ?>
             </h1>
 
             <?php 
@@ -36,7 +50,7 @@
                         <img class="card-img-top" src="images/<?php echo $post_slika; ?>" alt="Card image cap">
                         <div class="card-body">
                             <h2 class="card-title"><?php echo $post_naslov; ?></h2>
-                            <p class="card-text"><?php echo $post_sadrzaj; ?></p>
+                            <p class="card-text"><?php echo strlen($post_sadrzaj) > 200 ? substr($post_sadrzaj, 0, 200) . "..." : $post_sadrzaj; ?></p>
                             <a href="#" class="btn btn-primary">Read More &rarr;</a>
                         </div>
                         <div class="card-footer text-muted">
