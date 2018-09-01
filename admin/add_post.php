@@ -87,7 +87,7 @@
                         VALUES (?, ?, ?, ?, ?, ?, ?)");
                         $query->bind_param("isssssi", $post_category, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_comment_count);
                         if ($query->execute()) {
-                            $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Članak dodan.</strong></div>';
+                            $_SESSION['msg'] = '<div class="alert alert-success text-center alertFadeout"><strong>Članak dodan.</strong></div>';
                             header("Location: ./add_post");
                         } else {
                             $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Greška!</strong></div>';
