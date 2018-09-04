@@ -10,6 +10,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
+    <!-- FontAwesome 4.7.0 -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/phpcms.css">
 

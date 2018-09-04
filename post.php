@@ -2,8 +2,52 @@
 <?php $title = "Članak"; ?>
 <?php require_once "includes/header.php"; ?>
 
+<?php
+
+$query = "SELECT * FROM site_options";
+$result = $db->query($query);
+if ($result) {
+    $row = $result->fetch_assoc();
+    //var_dump($row);
+    $siteTitle = trim(htmlentities($row['site_title']));
+    $navbarTitle = trim(htmlentities($row['navbar_title']));
+    $infoText = trim(htmlentities($row['info_text']));
+}
+
+//var_dump($_GET);
+
+if (isset($_GET['p']) && !empty($_GET['p'])) {
+    $post_id = $_GET['p'];
+} else {
+    header("Location: .");
+}
+
+?>
+
 <!-- Navigation -->
 <?php require_once "includes/navigation.php"; ?>
+
+<?php 
+
+$query = "SELECT * FROM posts WHERE post_id = $post_id LIMIT 1";
+$rezultat = $db->query($query);
+if ($rezultat) {
+    $row = $rezultat->fetch_assoc();
+    if (!count($row)) {
+        header("Location: .");
+    } else {
+        //var_dump($row);
+        $postTitle = $row['post_title'];
+        $postAuthor = $row['post_author'];
+        $postDate = $row['post_date'];
+        $postImage = $row['post_image'];
+        $postContent = $row['post_content'];
+    }
+} else {
+    header("Location: .");
+}
+
+?>
 
 <!-- Page Content -->
 <div class="container sadrzaj">
@@ -14,55 +58,33 @@
         <div class="col-lg-8">
 
             <!-- Title -->
-            <h1 class="mt-4">Post Title</h1>
+            <h1 class="mt-4"><?php echo $postTitle; ?></h1>
 
             <!-- Author -->
             <p class="lead">
-                by
-                <a href="#">Start Bootstrap</a>
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                <a href="#"><?php echo $postAuthor; ?></a>
             </p>
 
             <hr>
 
             <!-- Date/Time -->
-            <p>Posted on January 1, 2018 at 12:00 PM</p>
+            <p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo date('d.m.Y. \u H:i', strtotime($postDate)); ?></p>
 
             <hr>
 
             <!-- Preview Image -->
-            <img class="img-fluid" src="http://placehold.it/900x300" alt="">
+            <img class="img-fluid" src="images/<?php echo $postImage; ?>" alt="">
 
             <hr>
 
             <!-- Post Content -->
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente
-                nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste
-                ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius
-                illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim,
-                iure!</p>
-
-            <blockquote class="blockquote">
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer class="blockquote-footer">Someone famous in
-                    <cite title="Source Title">Source Title</cite>
-                </footer>
-            </blockquote>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat
-                totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam
-                tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae?
-                Qui, necessitatibus, est!</p>
+            <p><?php echo $postContent; ?></p>
 
             <hr>
 
             <!-- Comments Form -->
-            <div class="card my-4">
+            <!-- <div class="card my-4">
                 <h5 class="card-header">Leave a Comment:</h5>
                 <div class="card-body">
                     <form>
@@ -72,10 +94,10 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Single Comment -->
-            <div class="media mb-4">
+            <!-- <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                 <div class="media-body">
                     <h5 class="mt-0">Commenter Name</h5>
@@ -83,10 +105,10 @@
                     vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
                     congue felis in faucibus.
                 </div>
-            </div>
+            </div> -->
 
             <!-- Comment with nested comments -->
-            <div class="media mb-4">
+            <!-- <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                 <div class="media-body">
                     <h5 class="mt-0">Commenter Name</h5>
@@ -115,7 +137,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
