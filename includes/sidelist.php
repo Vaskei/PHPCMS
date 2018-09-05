@@ -23,9 +23,12 @@
     if ($rezultat) {
         $polje = array();
         while ($redak = $rezultat->fetch_assoc()) {
-            $polje[] = $redak['cat_title'];
+            $polje[$redak['cat_id']] = $redak['cat_title'];
         }
-        list($podjela1, $podjela2) = array_chunk($polje, ceil(count($polje) / 2));
+        $pieces = array_chunk($polje, ceil(count($polje) / 2));
+        list($podjela1, $podjela2) = array_chunk($polje, ceil(count($polje) / 2), true);
+        //var_dump($podjela1);
+        //var_dump($podjela2);
     }
     
     ?>
@@ -38,7 +41,7 @@
 
                         <?php                         
                         foreach ($podjela1 as $key => $value) {
-                            echo '<li><a href="#">' . $value . '</a></li>';
+                            echo '<li><a href="index?cat=' . $key . '">' . $value . '</a></li>';
                         }                        
                         ?>
 
@@ -49,7 +52,7 @@
 
                         <?php                         
                         foreach ($podjela2 as $key => $value) {
-                            echo '<li><a href="#">' . $value . '</a></li>';
+                            echo '<li><a href="index?cat=' . $key . '">' . $value . '</a></li>';
                         }                        
                         ?>
 

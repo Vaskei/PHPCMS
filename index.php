@@ -32,36 +32,74 @@ if ($result) {
             </h1>
 
             <?php 
-            
-            $query = "SELECT * FROM posts ORDER BY post_date DESC";
-            $rezultat = $db->query($query);
-            if ($rezultat) {
-                while ($redak = $rezultat->fetch_assoc()) {
-                    $post_id = $redak['post_id'];
-                    $post_naslov = $redak['post_title'];
-                    $post_autor = $redak['post_author'];
-                    $post_vrijeme = $redak['post_date'];
-                    $post_slika = $redak['post_image'];
-                    $post_sadrzaj = $redak['post_content'];
 
-                    ?>
-                    
-                    <!-- Blog Post -->
-                    <div class="card mb-4">
-                        <img class="card-img-top" src="images/<?php echo $post_slika; ?>" alt="Card image cap">
-                        <div class="card-body">
-                            <h2 class="card-title"><a href="post?p=<?php echo $post_id; ?>"><?php echo $post_naslov; ?></a></h2>
-                            <p class="card-text"><?php echo strlen($post_sadrzaj) > 200 ? substr($post_sadrzaj, 0, 200) . "..." : $post_sadrzaj; ?></p>
-                            <a href="post?p=<?php echo $post_id; ?>" class="btn btn-primary">Više &rarr;</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            Objavljeno <?php echo date('d.m.Y. \u H:i', strtotime($post_vrijeme)); ?>
-                            <br>
-                            Autor: <a href="#"><?php echo $post_autor; ?></a>
-                        </div>
-                    </div><?php 
+            if (isset($_GET['cat']) && !empty($_GET['cat'])) {
+                $cat_id = $_GET['cat'];
+                $query = "SELECT * FROM posts WHERE post_category_id=$cat_id ORDER BY post_date DESC";
+                $rezultat = $db->query($query);
+                if ($rezultat->num_rows > 0) {
+                    while ($redak = $rezultat->fetch_assoc()) {
+                        //var_dump($redak);
+                        $post_id = $redak['post_id'];
+                        $post_naslov = $redak['post_title'];
+                        $post_autor = $redak['post_author'];
+                        $post_vrijeme = $redak['post_date'];
+                        $post_slika = $redak['post_image'];
+                        $post_sadrzaj = $redak['post_content'];
+    
+                        ?>
+                        
+                        <!-- Blog Post -->
+                        <div class="card mb-4">
+                            <img class="card-img-top" src="images/<?php echo $post_slika; ?>" alt="Card image cap">
+                            <div class="card-body">
+                                <h2 class="card-title"><a href="post?p=<?php echo $post_id; ?>"><?php echo $post_naslov; ?></a></h2>
+                                <p class="card-text"><?php echo strlen($post_sadrzaj) > 200 ? substr($post_sadrzaj, 0, 200) . "..." : $post_sadrzaj; ?></p>
+                                <a href="post?p=<?php echo $post_id; ?>" class="btn btn-primary">Više &rarr;</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Objavljeno <?php echo date('d.m.Y. \u H:i', strtotime($post_vrijeme)); ?>
+                                <br>
+                                Autor: <a href="#"><?php echo $post_autor; ?></a>
+                            </div>
+                        </div><?php 
+                    }
+                } else {
+                    echo '<div class="alert alert-warning text-center"><strong>Nema rezultata u odabranoj kategoriji.</strong></div>';
+                }
+            } else {
+                $query = "SELECT * FROM posts ORDER BY post_date DESC";
+                $rezultat = $db->query($query);
+                if ($rezultat) {
+                    while ($redak = $rezultat->fetch_assoc()) {
+                        $post_id = $redak['post_id'];
+                        $post_naslov = $redak['post_title'];
+                        $post_autor = $redak['post_author'];
+                        $post_vrijeme = $redak['post_date'];
+                        $post_slika = $redak['post_image'];
+                        $post_sadrzaj = $redak['post_content'];
+
+                        ?>
+                        
+                        <!-- Blog Post -->
+                        <div class="card mb-4">
+                            <img class="card-img-top" src="images/<?php echo $post_slika; ?>" alt="Card image cap">
+                            <div class="card-body">
+                                <h2 class="card-title"><a href="post?p=<?php echo $post_id; ?>"><?php echo $post_naslov; ?></a></h2>
+                                <p class="card-text"><?php echo strlen($post_sadrzaj) > 200 ? substr($post_sadrzaj, 0, 200) . "..." : $post_sadrzaj; ?></p>
+                                <a href="post?p=<?php echo $post_id; ?>" class="btn btn-primary">Više &rarr;</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Objavljeno <?php echo date('d.m.Y. \u H:i', strtotime($post_vrijeme)); ?>
+                                <br>
+                                Autor: <a href="#"><?php echo $post_autor; ?></a>
+                            </div>
+                        </div><?php 
+                    }
                 }
             }
+            
+
             
             ?>
 
