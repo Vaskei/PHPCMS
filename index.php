@@ -122,3 +122,9 @@ if ($result) {
 <!-- /.container -->
 
 <?php require_once "includes/footer.php"; ?>
+
+<?php 
+echo '<script>
+    document.querySelector("#index").classList.add("active");
+</script>';
+?>

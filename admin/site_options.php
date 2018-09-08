@@ -76,14 +76,14 @@
                         if (empty($siteTitle) && empty($navbarTitle) && empty($infoText)) {
                            // echo '<button type="button" class="btn btn-success gumb_kategorija">Dodaj</button>';
                             echo "<form action='' method='POST'>
-                                    <input type='submit' value='Dodaj' name='optionsAddForm' class='btn btn-success gumb_kategorija'></input>
+                                    <input type='submit' value='Dodaj' name='optionsAddForm' class='btn btn-success gumb_kategorija'/>
                                 </form>";
                         } else {
                             // echo '<button type="button" class="btn btn-info gumb_kategorija">Uredi</button>
                             //       <button type="button" class="btn btn-danger gumb_kategorija">Briši</button>';
                             echo "<form action='' method='POST'>
                                     <input type='hidden' name='optionId' value='" . $optionId . "' />
-                                    <input type='submit' value='Uredi' name='optionsEditForm' class='btn btn-info gumb_kategorija'></input>
+                                    <input type='submit' value='Uredi' name='optionsEditForm' class='btn btn-info gumb_kategorija'/>
                                 </form>
                                 <form action='' method='POST'>
                                     <input type='hidden' name='optionId' value='" . $optionId . "' />
@@ -93,7 +93,7 @@
                                         data-btn-ok-label='DA' data-btn-ok-class='btn-success'
                                         data-btn-ok-icon-class='fa fa-check' data-btn-ok-icon-content=' '
                                         data-btn-cancel-label='NE' data-btn-cancel-class='btn-danger'
-                                        data-btn-cancel-icon-class='fa fa-times' data-btn-cancel-icon-content=' '></input>
+                                        data-btn-cancel-icon-class='fa fa-times' data-btn-cancel-icon-content=' '/>
                                 </form>";
                         }
 

@@ -30,3 +30,9 @@
 </div>
 
 <?php require_once "includes/admin_footer.php"; ?>
+
+<?php 
+echo '<script>
+    document.querySelector("#admin_info").classList.add("active");
+</script>';
+?>

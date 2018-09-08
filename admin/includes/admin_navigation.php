@@ -8,12 +8,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="../index.php">Home
+            <li class="nav-item">
+                <a class="nav-link" href="../.">Home
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="admin_info">
                 <a class="nav-link" href="info">Info</a>
             </li>
         </ul>

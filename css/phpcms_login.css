@@ -1,0 +1,22 @@
+body {
+    background-image: url("../includes/blur_background.jpg");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 10px;
+}
+
+* {
+    border-radius: 0 !important;
+}
+
+.card-login {
+    max-width: 25rem;
+    box-shadow: 0 0 10px #999999;
+}
+
+.card-register {
+    max-width: 40rem;
+    box-shadow: 0 0 10px #999999;
+}

@@ -72,7 +72,7 @@
                                         <div class='btn-group' role='group' aria-label='Button group'>
                                             <form action='edit_post' method='post'>
                                                 <input type='hidden' name='idEdit' value='" . $redak['post_id'] . "' />
-                                                <input type='submit' value='Uredi' name='postEdit' class='btn btn-info gumb_kategorija'></input>
+                                                <input type='submit' value='Uredi' name='postEdit' class='btn btn-info gumb_kategorija'/>
                                             </form>
                                             <form action='' method='post'>
                                                 <input type='hidden' name='idDelete' value='" . $redak['post_id'] . "' />
@@ -82,7 +82,7 @@
                                                     data-btn-ok-label='DA' data-btn-ok-class='btn-success'
                                                     data-btn-ok-icon-class='fa fa-check' data-btn-ok-icon-content=' '
                                                     data-btn-cancel-label='NE' data-btn-cancel-class='btn-danger'
-                                                    data-btn-cancel-icon-class='fa fa-times' data-btn-cancel-icon-content=' '></input>
+                                                    data-btn-cancel-icon-class='fa fa-times' data-btn-cancel-icon-content=' '/>
                                             </form>
                                         </div>
                                     </td>";
