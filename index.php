@@ -27,6 +27,14 @@ if ($result) {
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
+            <!-- Ispisivanje poruke preko sesije -->
+            <?php
+            if (isset($_SESSION['msg']) && $_SESSION['msg'] != '') {
+                echo $_SESSION['msg'];
+                unset($_SESSION['msg']);
+            }
+            ?>
+
             <h1 class="my-4">
                 <?php echo isset($siteTitle)&&!empty($siteTitle) ? $siteTitle : "Naslov stranice"; ?>
             </h1>

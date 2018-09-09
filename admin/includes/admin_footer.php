@@ -13,7 +13,7 @@
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/bootstrap-confirmation.min.js"></script>
-    <script src="./js/custom.js"></script>
+    <script src="./js/custom_admin.js"></script>
 </body>
 
 </html>

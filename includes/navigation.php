@@ -13,19 +13,27 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin") : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="./admin">Admin</a>
                     </li>
+                    <?php endif; ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Profil
                         </a>
                         <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="user_panel">Opcije</a>
+                            <?php if (isset($_SESSION['user'])) : ?>
+                            <a class="dropdown-item" href="user_panel">Opcije</a>                            
                             <div class="dropdown-divider"></div>
+                            <?php endif; ?>
+                            <?php if (!isset($_SESSION['user'])) : ?>
                             <a class="dropdown-item" href="login">Prijava</a>
                             <a class="dropdown-item" href="registration">Registracija</a>
+                            <?php endif; ?>
+                            <?php if (isset($_SESSION['user'])) : ?>
                             <a class="dropdown-item" href="logout">Odjava</a>
+                            <?php endif; ?>
                         </div>
                     </li>
                 </ul>
