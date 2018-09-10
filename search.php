@@ -20,7 +20,7 @@ if ($result) {
 <?php require_once "includes/navigation.php"; ?>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container sadrzaj">
 
     <div class="row">
 
