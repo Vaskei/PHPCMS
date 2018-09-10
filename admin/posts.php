@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Članci"; ?>
 <?php require_once "includes/admin_header.php"; ?>

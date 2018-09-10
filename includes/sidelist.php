@@ -4,11 +4,11 @@
     <div class="card my-4">
         <h5 class="card-header">Pretraga</h5>
         <div class="card-body">
-            <form action="search.php" method="post">
+            <form action="search" method="POST">
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" placeholder="Traži...">
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" name="submit" type="submit">Go!</button>
+                        <button class="btn btn-secondary" name="searchSubmit" type="submit">Go!</button>
                     </span>
                 </div>
             </form>            

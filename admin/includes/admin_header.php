@@ -1,5 +1,13 @@
 <?php ob_start(); ?>
-<?php 
+<?php
+
+session_start();
+if (isset($_SESSION['role']) && $_SESSION['role'] == "user") {
+    header("Location: ../");
+} elseif (!isset($_SESSION['user'])) {
+    header("Location: ../");
+}
+
 function echoActiveClass($navItemUri)
 {
     $current_file_name = basename($_SERVER['PHP_SELF'], ".php");

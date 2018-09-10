@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Informacije"; ?>
 <?php require_once "includes/admin_header.php"; ?>
@@ -18,12 +17,32 @@
                     echo $_SESSION['msg'];
                     unset($_SESSION['msg']);
                 }
-                ?>                                             
+                ?>
             </h2>
 
             <hr>
 
-            <!-- Informacije za admin-a -->
+            <!-- Informacije -->
+
+            <h5>
+                <i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> Student: <small class="text-muted">Goran Ferenc</small>
+            </h5>
+            <hr>
+
+            <h5>
+                <i class="fa fa-book fa-fw" aria-hidden="true"></i> Kolegij: <small class="text-muted">PHP programiranje</small>
+            </h5>
+            <hr>
+
+            <h5>
+                <i class="fa fa-user-md fa-fw" aria-hidden="true"></i> Nositelj kolegija: <small class="text-muted">dr. sc. Sanja Brekalo, v. pred.</small>
+            </h5>
+            <hr>
+
+            <h5>
+                <i class="fa fa-calendar fa-fw" aria-hidden="true"></i> Godina: <small class="text-muted">2018.</small>
+            </h5>
+            <hr>
 
         </main>
     </div>

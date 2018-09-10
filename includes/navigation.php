@@ -23,17 +23,25 @@
                             Profil
                         </a>
                         <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
+
+                            <?php if (isset($_SESSION['user'])) : ?>
+                            <h6 class="dropdown-header text-white"> <?php echo $_SESSION['user']; ?></h6>
+                            <?php endif; ?>
+
                             <?php if (isset($_SESSION['user'])) : ?>
                             <a class="dropdown-item" href="user_panel">Opcije</a>                            
                             <div class="dropdown-divider"></div>
                             <?php endif; ?>
+
                             <?php if (!isset($_SESSION['user'])) : ?>
                             <a class="dropdown-item" href="login">Prijava</a>
                             <a class="dropdown-item" href="registration">Registracija</a>
                             <?php endif; ?>
+
                             <?php if (isset($_SESSION['user'])) : ?>
                             <a class="dropdown-item" href="logout">Odjava</a>
                             <?php endif; ?>
+
                         </div>
                     </li>
                 </ul>

@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Postavke"; ?>
 <?php require_once "includes/admin_header.php"; ?>
@@ -133,7 +132,7 @@
             <?php 
 
             if (isset($_POST['optionsAddSubmit'])) {
-                var_dump($_POST);
+                //var_dump($_POST);
                 $site_title = trim(htmlentities($_POST['site_title']));
                 $navbar_title = trim(htmlentities($_POST['navbar_title']));
                 $info_text = trim(htmlentities($_POST['info_text']));
@@ -155,7 +154,7 @@
 
             <!-- Uredivanje opcija -->
 
-            <?php if (isset($_POST['optionsEditForm'])) : var_dump($_POST) ?>
+            <?php if (isset($_POST['optionsEditForm'])) : //var_dump($_POST) ?>
             
             <hr>
 
@@ -182,7 +181,7 @@
             <?php 
 
             if (isset($_POST['optionsEditSubmit'])) {
-                var_dump($_POST);
+                //var_dump($_POST);
                 $site_title = trim(htmlentities($_POST['site_title']));
                 $navbar_title = trim(htmlentities($_POST['navbar_title']));
                 $info_text = trim(htmlentities($_POST['info_text']));
@@ -206,7 +205,7 @@
 
             <?php
             if (isset($_POST['optionsDelete'])) {
-                var_dump($_POST);
+                //var_dump($_POST);
                 $idDelete = $_POST['optionId'];
                 $query = $db->prepare("DELETE FROM site_options WHERE option_id = ?");
                 $query->bind_param("i", $idDelete);

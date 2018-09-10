@@ -32,11 +32,11 @@
                         <i class="fa fa-list fa-fw"></i>&nbsp;Kategorije
                     </a>
                 </li>
-                <li class="nav-item <?php echoActiveClass("comments") ?>">
+                <!-- <li class="nav-item <?php //echoActiveClass("comments") ?>">
                     <a class="nav-link pl-0" href="comments">
                         <i class="fa fa-comments fa-fw"></i>&nbsp;Komentari
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link pl-0 dropdown-toggle" href="#users_submenu" data-parent="#adminSidebar" data-toggle="collapse" data-target="#users_submenu">
                         <i class="fa fa-users fa-fw"></i>&nbsp;Korisnici

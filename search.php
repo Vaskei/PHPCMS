@@ -1,5 +1,20 @@
 <?php require_once "includes/db.php"; ?>
+<?php $title = "Pretraga"; ?>
 <?php require_once "includes/header.php"; ?>
+
+<?php
+
+$query = "SELECT * FROM site_options";
+$result = $db->query($query);
+if ($result) {
+    $row = $result->fetch_assoc();
+    //var_dump($row);
+    $siteTitle = trim(htmlentities($row['site_title']));
+    $navbarTitle = trim(htmlentities($row['navbar_title']));
+    $infoText = trim(htmlentities($row['info_text']));
+}
+
+?>
 
 <!-- Navigation -->
 <?php require_once "includes/navigation.php"; ?>
@@ -18,13 +33,13 @@
 
             <?php 
             
-            if (isset($_POST['submit']) && !empty($_POST['search'])) {
+            if (isset($_POST['searchSubmit']) && !empty($_POST['search'])) {
                 $pretraga = trim(htmlentities($_POST['search']));
                 $pretraga = "%{$pretraga}%";
                 //$pretraga = "%{$pretraga}%";
                 //echo $pretraga;
 
-                $query = $db->prepare("SELECT * FROM posts WHERE post_tags LIKE ? OR post_title LIKE ?");
+                $query = $db->prepare("SELECT * FROM posts WHERE post_tags LIKE ? OR post_title LIKE ? ORDER BY post_date DESC");
                 $query->bind_param('ss', $pretraga, $pretraga);
                 //$query->execute();
 
@@ -34,6 +49,7 @@
                     //print_r($rezultat);
                     if ($rezultat->num_rows > 0) {
                         while ($redak = $rezultat->fetch_assoc()) {
+                            $post_id = $redak['post_id'];
                             $post_naslov = $redak['post_title'];
                             $post_autor = $redak['post_author'];
                             $post_vrijeme = $redak['post_date'];
@@ -46,13 +62,14 @@
                             <div class="card mb-4">
                                 <img class="card-img-top" src="images/<?php echo $post_slika; ?>" alt="Card image cap">
                                 <div class="card-body">
-                                    <h2 class="card-title"><?php echo $post_naslov; ?></h2>
-                                    <p class="card-text"><?php echo $post_sadrzaj; ?></p>
-                                    <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                                    <h2 class="card-title"><a href="post?p=<?php echo $post_id; ?>"><?php echo $post_naslov; ?></a></h2>
+                                    <p class="card-text"><?php echo strlen($post_sadrzaj) > 200 ? substr($post_sadrzaj, 0, 200) . "..." : $post_sadrzaj; ?></p>
+                                    <a href="post?p=<?php echo $post_id; ?>" class="btn btn-primary">Više &rarr;</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    Posted on <?php echo $post_vrijeme; ?> by
-                                    <a href="#"><?php echo $post_autor; ?></a>
+                                    Objavljeno <?php echo date('d.m.Y. \u H:i', strtotime($post_vrijeme)); ?>
+                                    <br>
+                                    Autor: <a href="#"><?php echo $post_autor; ?></a>
                                 </div>
                             </div>
                             
@@ -68,8 +85,8 @@
                     echo "Greška kod pretraživanja.";
                 }
             } else {
-                header("Location: index.php");
-                exit;
+                //var_dump($_POST);
+                header("Location: .");
             }
 
             ?>
@@ -98,3 +115,9 @@
 <!-- /.container -->
 
 <?php require_once "includes/footer.php"; ?>
+
+<?php 
+echo '<script>
+    document.querySelector("#index").classList.add("active");
+</script>';
+?>

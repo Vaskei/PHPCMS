@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <?php require_once "includes/admin_db.php"; ?>
 <?php $title = "Admin - Dodavanje članka"; ?>
 <?php require_once "includes/admin_header.php"; ?>
@@ -101,18 +100,18 @@
 
                 //move_uploaded_file($post_image_temp, "../images/$post_image");
 
-                echo "var_dump POST: <br />";
-                var_dump($_POST);
-                echo "var_dump FILES: <br />";
-                var_dump($_FILES);
+                // echo "var_dump POST: <br />";
+                // var_dump($_POST);
+                // echo "var_dump FILES: <br />";
+                // var_dump($_FILES);
                 //echo $post_date;
                 // echo "<br />";
                 // echo $post_date_unix;
                 // echo "<br />";
                 // echo $post_date_page;
-                echo "<br />";
-                echo "post_comment_count = " . $post_comment_count;
-                echo "<br />";
+                // echo "<br />";
+                // echo "post_comment_count = " . $post_comment_count;
+                // echo "<br />";
 
                 // $query = $db->prepare("INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count)
                 //                          VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
