@@ -79,14 +79,14 @@ if (isset($_SESSION['user'])) header ("Location: .");
         <div class="card card-login mx-auto mt-5">
             <div class="card-header bg-light">Prijava</div>
             <div class="card-body">
-                <form action="" method="POST">
+                <form class="form_validation" action="" method="POST" novalidate>
                     <div class="form-group">
                         <label for="username">Korisničko ime</label>
-                        <input class="form-control" name="username" id="username" type="text" aria-describedby="usernameHelp" placeholder="Korisničko ime"/>
+                        <input class="form-control" name="username" id="username" type="text" aria-describedby="usernameHelp" placeholder="Korisničko ime" required/>
                     </div>
                     <div class="form-group">
                         <label for="password">Lozinka</label>
-                        <input class="form-control" name="password" id="password" type="password" placeholder="Lozinka"/>
+                        <input class="form-control" name="password" id="password" type="password" placeholder="Lozinka" required/>
                     </div>
                     <input type="submit" value="Prijava" name="login" class="btn btn-primary btn-block"/>                
                 </form>

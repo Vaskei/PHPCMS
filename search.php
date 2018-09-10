@@ -69,7 +69,7 @@ if ($result) {
                                 <div class="card-footer text-muted">
                                     Objavljeno <?php echo date('d.m.Y. \u H:i', strtotime($post_vrijeme)); ?>
                                     <br>
-                                    Autor: <a href="#"><?php echo $post_autor; ?></a>
+                                    Autor: <?php echo $post_autor; ?>
                                 </div>
                             </div>
                             
