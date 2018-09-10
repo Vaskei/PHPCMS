@@ -33,7 +33,7 @@
                                 <th>Naslov</th>
                                 <th>Kategorija</th>
                                 <th>Slika</th>
-                                <th>Komentari</th>
+                                <!-- <th>Komentari</th> -->
                                 <th>Tagovi</th>
                                 <th>Datum</th>
                                 <th>Opcije</th>
@@ -64,7 +64,7 @@
                                     echo "<td>$post_title</td>";
                                     echo "<td>$post_category_id" . " - " . "$cat_title</td>";
                                     echo "<td><img width='100' src='../images/$post_image' alt='image'> </td>";
-                                    echo "<td>$post_comment_count</td>";
+                                    //echo "<td>$post_comment_count</td>";
                                     echo "<td>$post_tags</td>";
                                     echo "<td>$post_date</td>";
                                     echo "<td>
