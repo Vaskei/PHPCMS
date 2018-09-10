@@ -4,7 +4,7 @@
 session_start();
 if (isset($_SESSION['role']) && $_SESSION['role'] == "user") {
     header("Location: ../");
-} elseif (!isset($_SESSION['user'])) {
+} elseif (!isset($_SESSION['id'])) {
     header("Location: ../");
 }
 

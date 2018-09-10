@@ -37,16 +37,10 @@
                         <i class="fa fa-comments fa-fw"></i>&nbsp;Komentari
                     </a>
                 </li> -->
-                <li class="nav-item">
-                    <a class="nav-link pl-0 dropdown-toggle" href="#users_submenu" data-parent="#adminSidebar" data-toggle="collapse" data-target="#users_submenu">
+                <li class="nav-item <?php echoActiveClass("users") ?>">
+                    <a class="nav-link pl-0" href="users">
                         <i class="fa fa-users fa-fw"></i>&nbsp;Korisnici
                     </a>
-                    <div class="collapse" id="users_submenu">
-                        <ul class="flex-column nav">
-                            <a class="nav-link" href="#">Sub 1</a>
-                            <a class="nav-link" href="#">Sub 2</a>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item <?php echoActiveClass("site_options") ?>">
                     <a class="nav-link pl-0" href="site_options">

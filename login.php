@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if (isset($_SESSION['user'])) header ("Location: .");
+if (isset($_SESSION['id'])) header ("Location: .");
 ?>
 <?php require_once "includes/db.php"; ?>
 <?php $title = "Prijava"; ?>
@@ -58,8 +58,9 @@ if (isset($_SESSION['user'])) header ("Location: .");
                 if ($row['user_password'] == $password) {
                     //var_dump($_POST);
                     //var_dump($row);
-                    $_SESSION['user'] = $row['user_nickname'];
+                    $_SESSION['username'] = $row['user_username'];
                     $_SESSION['role'] = $row['user_role'];
+                    $_SESSION['id'] = $row['user_id'];
                     //var_dump($_SESSION);
                     header("Location: .");
                 } else {

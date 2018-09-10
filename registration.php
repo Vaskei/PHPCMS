@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if (isset($_SESSION['user'])) header ("Location: .");
+if (isset($_SESSION['id'])) header ("Location: .");
 ?>
 <?php require_once "includes/db.php"; ?>
 <?php $title = "Registracija"; ?>
@@ -56,7 +56,7 @@ if (isset($_SESSION['user'])) header ("Location: .");
             } elseif (empty($username) || !preg_match("/^[a-zA-Z0-9]{6,50}$/", $username)) {
                 $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Korisničko ime mora sadržavati minimalno 6 znakova, maksimalno 50 znakova, koristite samo slova i/ili brojke.</strong></div>';
                 header("Location: ./registration");
-            } elseif (empty($password) || !preg_match("/^[a-zA-Z0-9]{6,50}$/", $password)) {
+            } elseif (empty($_POST['password']) || !preg_match("/^[a-zA-Z0-9]{6,50}$/", $_POST['password'])) {
                 $_SESSION['msg'] = '<div class="alert alert-warning text-center alertFadeout"><strong>Lozinke moraju sadržavati minimalno 6 znakova, maksimalno 50 znakova, koristite samo slova i/ili brojke. Lozinke se moraju podudarati.</strong></div>';
                 header("Location: ./registration");
             } else {
@@ -96,20 +96,20 @@ if (isset($_SESSION['user'])) header ("Location: .");
                         <label for="nickname">Nadimak</label>
                         <input class="form-control" name="nickname" id="nickname" type="text" aria-describedby="nicknameHelp" placeholder="Unesite nadimak" pattern=".{4,50}" required>
                         <small id="nicknameHelp" class="form-text text-muted">Nadimak će biti prikazan pored Vašeg profila i svima vidljiv (min. 4 znakova, max. 50 znakova).</small>
-                        <div class="invalid-feedback">Nadimak je obavezan.</div>
+                        <div class="invalid-feedback">Nadimak je obavezan (min. 4 znakova, max. 50 znakova).</div>
                     </div>
                     <div class="form-group">
                         <label for="username">Korisničko ime</label>
                         <input class="form-control" name="username" id="username" type="text" aria-describedby="usernameHelp" placeholder="Unesite korisničko ime" pattern="^[a-zA-Z0-9]{6,50}$" required>
                         <small id="usernameHelp" class="form-text text-muted">Korisničko ime koristi se za prijavu (min. 6 znakova, max. 50 znakova, koristite samo slova i/ili brojke).</small>
-                        <div class="invalid-feedback">Korisničko ime je obavezno.</div>
+                        <div class="invalid-feedback">Korisničko ime je obavezno (min. 6 znakova, max. 50 znakova, koristite samo slova i/ili brojke).</div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label for="password">Lozinka</label>
                                 <input class="form-control" name="password" id="password" type="password" placeholder="Lozinka" pattern="^[a-zA-Z0-9]{6,50}$" required>
-                                <div class="invalid-feedback">Zaporka je obavezna.</div>
+                                <div class="invalid-feedback">Zaporka je obavezna (slova i/ili brojke, min. 6 znakova, max. 50 znakova).</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="confirmPassword">Ponovite lozinku</label>

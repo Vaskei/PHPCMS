@@ -1,3 +1,18 @@
+<?php
+
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    $query = $db->prepare('SELECT * FROM users WHERE user_id=? LIMIT 1');
+    $query->bind_param('d', $id);
+    if ($query->execute()) {
+        $result = $query->get_result();
+        $row = $result->fetch_assoc();
+        $userNickname = $row['user_nickname'];
+    }
+}
+
+?>
+
 <div class="container navigacija">
     <nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top py-2">
         <div class="container">
@@ -18,27 +33,27 @@
                         <a class="nav-link" href="./admin">Admin</a>
                     </li>
                     <?php endif; ?>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="profile">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Profil
                         </a>
                         <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
 
-                            <?php if (isset($_SESSION['user'])) : ?>
-                            <h6 class="dropdown-header text-white"> <?php echo $_SESSION['user']; ?></h6>
+                            <?php if (isset($_SESSION['id'])) : ?>
+                            <h6 class="dropdown-header text-white"> <?php echo $userNickname; ?></h6>
                             <?php endif; ?>
 
-                            <?php if (isset($_SESSION['user'])) : ?>
+                            <?php if (isset($_SESSION['id'])) : ?>
                             <a class="dropdown-item" href="user_panel">Opcije</a>                            
                             <div class="dropdown-divider"></div>
                             <?php endif; ?>
 
-                            <?php if (!isset($_SESSION['user'])) : ?>
+                            <?php if (!isset($_SESSION['id'])) : ?>
                             <a class="dropdown-item" href="login">Prijava</a>
                             <a class="dropdown-item" href="registration">Registracija</a>
                             <?php endif; ?>
 
-                            <?php if (isset($_SESSION['user'])) : ?>
+                            <?php if (isset($_SESSION['id'])) : ?>
                             <a class="dropdown-item" href="logout">Odjava</a>
                             <?php endif; ?>
 
